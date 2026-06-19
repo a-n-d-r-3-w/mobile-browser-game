@@ -16,13 +16,12 @@ canvasElement.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
 const canvasContext = canvasElement.getContext("2d");
 canvasContext.imageSmoothingEnabled = false;
 
-// Prevent pinch-to-zoom / multi-touch browser gestures on mobile
+// Prevent pinch-to-zoom and multi-touch browser gestures.
 window.addEventListener('touchmove', event => {
     if (event.touches.length > 1) {
         event.preventDefault();
     }
 }, { passive: false });
-
 document.addEventListener('gesturestart', event => event.preventDefault());
 document.addEventListener('gesturechange', event => event.preventDefault());
 document.addEventListener('gestureend', event => event.preventDefault());
