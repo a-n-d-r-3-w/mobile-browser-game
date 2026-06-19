@@ -1,18 +1,17 @@
 const rootElement = document.documentElement;
 const canvasElement = document.getElementById("canvas");
 
+// Set canvas rendered size.
 const CANVAS_RENDERED_WIDTH_PX = 375;
 const CANVAS_RENDERED_HEIGHT_PX = 634;
 rootElement.style.setProperty('--canvas-width', `${CANVAS_RENDERED_WIDTH_PX}px`);
 rootElement.style.setProperty('--canvas-height', `${CANVAS_RENDERED_HEIGHT_PX}px`);
 
-// Internal drawing buffer (logical resolution)
-const CANVAS_BUFFER_WIDTH_PX = 256;
-const CANVAS_BUFFER_HEIGHT_PX = CANVAS_RENDERED_HEIGHT_PX * (CANVAS_BUFFER_WIDTH_PX / CANVAS_RENDERED_WIDTH_PX); // Match aspect ratio of rendered size.
-
-
-canvasElement.width = CANVAS_BUFFER_WIDTH_PX;
-canvasElement.height = CANVAS_BUFFER_HEIGHT_PX;
+// Set canvas drawing buffer size.
+const CANVAS_DRAWING_BUFFER_WIDTH_PX = 256;
+const CANVAS_DRAWING_BUFFER_HEIGHT_PX = CANVAS_RENDERED_HEIGHT_PX * (CANVAS_DRAWING_BUFFER_WIDTH_PX / CANVAS_RENDERED_WIDTH_PX); // Match aspect ratio of rendered size.
+canvasElement.width = CANVAS_DRAWING_BUFFER_WIDTH_PX;
+canvasElement.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
 
 const canvasContext = canvasElement.getContext("2d");
 canvasContext.imageSmoothingEnabled = false;
@@ -54,7 +53,7 @@ const CommandCursorColor = "#0056ff";
 
 // Draw a base background color before the images load.
 canvasContext.fillStyle = "#ffffff"; // white
-canvasContext.fillRect(0, 0, CANVAS_BUFFER_WIDTH_PX, CANVAS_BUFFER_HEIGHT_PX);
+canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
 const controllerImageElement = new Image();
 const backgroundImageElement = new Image();
@@ -67,19 +66,19 @@ let cursorYPosPx = 0;
 const buttonWidthPx = 26;
 const buttonHeightPx = 26;
 const leftButtonXPosPx = 19;
-const leftButtonYPosPx = CANVAS_BUFFER_HEIGHT_PX - buttonHeightPx - 51;
+const leftButtonYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - buttonHeightPx - 51;
 const rightButtonXPosPx = 89;
 const rightButtonYPosPx = leftButtonYPosPx;
 
 function redrawScene() {
     // clear
     canvasContext.fillStyle = "#ffffff";
-    canvasContext.fillRect(0, 0, CANVAS_BUFFER_WIDTH_PX, CANVAS_BUFFER_HEIGHT_PX);
+    canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
     // compute positions
-    const controllerYPosPx = CANVAS_BUFFER_HEIGHT_PX - controllerImageElement.height;
+    const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
     const backgroundXPosPx = 0;
-    const backgroundYPosPx = CANVAS_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
+    const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
 
     // draw background, cursor, controller in order
     canvasContext.drawImage(backgroundImageElement, backgroundXPosPx, backgroundYPosPx);
@@ -108,7 +107,7 @@ function checkInit() {
     if (loadedImageCount === 3) {
         // center cursor over background by default
         const backgroundXPosPx = 0;
-        const backgroundYPosPx = CANVAS_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
+        const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
         cursorXPosPx = backgroundXPosPx + Math.floor((backgroundImageElement.width - cursorImageElement.width) / 2);
         cursorYPosPx = backgroundYPosPx + Math.floor((backgroundImageElement.height - cursorImageElement.height) / 2);
         redrawScene();
@@ -135,7 +134,7 @@ function checkInit() {
         };
 
         const moveCursorRight = () => {
-            cursorXPosPx = Math.min(CANVAS_BUFFER_WIDTH_PX - cursorImageElement.width, cursorXPosPx + cursorMoveDistancePx);
+            cursorXPosPx = Math.min(CANVAS_DRAWING_BUFFER_WIDTH_PX - cursorImageElement.width, cursorXPosPx + cursorMoveDistancePx);
             redrawScene();
         };
 
