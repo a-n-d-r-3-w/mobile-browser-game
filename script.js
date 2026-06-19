@@ -71,15 +71,15 @@ function render() {
     // Draw background.
     const backgroundXPosPx = 0;
     const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
-
     canvasContext.drawImage(backgroundImageElement, backgroundXPosPx, backgroundYPosPx);
 
     // Draw controller.
     const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
     canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
-    // Draw cursor on top.
-    if (cursorImageElement.complete && cursorImageElement.naturalWidth) {
+    // Draw cursor.
+    const isCursorImageLoaded = cursorImageElement.complete && cursorImageElement.naturalWidth;
+    if (isCursorImageLoaded) {
         canvasContext.drawImage(cursorImageElement, cursorXPosPx, cursorYPosPx);
     }
 
