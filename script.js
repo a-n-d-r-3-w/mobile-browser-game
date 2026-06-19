@@ -99,7 +99,7 @@ function render() {
 
 // Load images; when all required images are available, initialize cursor and handlers
 let loadedImageCount = 0;
-const cursorMoveDistancePx = 2;
+const cursorMoveDistancePx = 4;
 function initAfterAllImagesLoaded() {
     loadedImageCount++;
     if (loadedImageCount === 3) {
