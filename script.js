@@ -133,6 +133,16 @@ function initAfterAllImagesLoaded() {
             render();
         };
 
+        const moveCursorUp = () => {
+            cursorYPosPx = Math.max(0, cursorYPosPx - cursorMoveDistancePx);
+            render();
+        };
+
+        const moveCursorDown = () => {
+            cursorYPosPx = Math.min(CANVAS_DRAWING_BUFFER_HEIGHT_PX - cursorImageElement.height, cursorYPosPx + cursorMoveDistancePx);
+            render();
+        };
+
         canvasElement.addEventListener('pointerdown', (ev) => {
             const canvasBoundingRect = canvasElement.getBoundingClientRect();
             const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
@@ -151,6 +161,18 @@ function initAfterAllImagesLoaded() {
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, 50);
+                }, 500);
+            } else if (pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+                activePointerId = ev.pointerId;
+                moveCursorUp();
+                holdDelayTimeoutId = setTimeout(() => {
+                    holdRepeatIntervalId = setInterval(moveCursorUp, 50);
+                }, 500);
+            } else if (pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+                activePointerId = ev.pointerId;
+                moveCursorDown();
+                holdDelayTimeoutId = setTimeout(() => {
+                    holdRepeatIntervalId = setInterval(moveCursorDown, 50);
                 }, 500);
             }
         });
