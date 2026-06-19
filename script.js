@@ -150,25 +150,33 @@ function initAfterAllImagesLoaded() {
             const pointerXPosPx = (ev.clientX - canvasBoundingRect.left) * canvasScaleX;
             const pointerYPosPx = (ev.clientY - canvasBoundingRect.top) * canvasScaleY;
 
-            if (pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+            const isLeftButtonPressed = pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+
+            const isRightButtonPressed = pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+
+            const isTopButtonPressed = pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+
+            const isBottomButtonPressed = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+
+            if (isLeftButtonPressed) {
                 activePointerId = ev.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorLeft, 50);
                 }, 500);
-            } else if (pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+            } else if (isRightButtonPressed) {
                 activePointerId = ev.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, 50);
                 }, 500);
-            } else if (pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+            } else if (isTopButtonPressed) {
                 activePointerId = ev.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorUp, 50);
                 }, 500);
-            } else if (pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
+            } else if (isBottomButtonPressed) {
                 activePointerId = ev.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
