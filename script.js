@@ -111,7 +111,7 @@ function initAfterAllImagesLoaded() {
         let holdRepeatIntervalId = null;
         let activePointerId = null;
 
-        const clearHold = () => {
+        const clearButtonHold = () => {
             if (holdDelayTimeoutId !== null) {
                 clearTimeout(holdDelayTimeoutId);
                 holdDelayTimeoutId = null;
@@ -143,12 +143,13 @@ function initAfterAllImagesLoaded() {
             render();
         };
 
-        canvasElement.addEventListener('pointerdown', (ev) => {
+        canvasElement.addEventListener('pointerdown', (event) => {
             const canvasBoundingRect = canvasElement.getBoundingClientRect();
             const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
             const canvasScaleY = canvasElement.height / canvasBoundingRect.height;
-            const pointerXPosPx = (ev.clientX - canvasBoundingRect.left) * canvasScaleX;
-            const pointerYPosPx = (ev.clientY - canvasBoundingRect.top) * canvasScaleY;
+
+            const pointerXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
+            const pointerYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
 
             const isPointerOverLeftButton = pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
@@ -159,25 +160,25 @@ function initAfterAllImagesLoaded() {
             const isPointerOverBottomButton = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
             if (isPointerOverLeftButton) {
-                activePointerId = ev.pointerId;
+                activePointerId = event.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorLeft, 50);
                 }, 500);
             } else if (isPointerOverRightButton) {
-                activePointerId = ev.pointerId;
+                activePointerId = event.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, 50);
                 }, 500);
             } else if (isPointerOverUpButton) {
-                activePointerId = ev.pointerId;
+                activePointerId = event.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorUp, 50);
                 }, 500);
             } else if (isPointerOverBottomButton) {
-                activePointerId = ev.pointerId;
+                activePointerId = event.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorDown, 50);
@@ -187,19 +188,19 @@ function initAfterAllImagesLoaded() {
 
         canvasElement.addEventListener('pointerup', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearHold();
+                clearButtonHold();
             }
         });
 
         canvasElement.addEventListener('pointercancel', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearHold();
+                clearButtonHold();
             }
         });
 
         canvasElement.addEventListener('pointerleave', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearHold();
+                clearButtonHold();
             }
         });
     }
