@@ -1,14 +1,14 @@
-const root = document.documentElement;
-
+const rootElement = document.documentElement;
 const canvasElement = document.getElementById("canvas");
+
 const CANVAS_RENDERED_WIDTH_PX = 375;
 const CANVAS_RENDERED_HEIGHT_PX = 634;
-root.style.setProperty('--canvas-width', `${CANVAS_RENDERED_WIDTH_PX}px`);
-root.style.setProperty('--canvas-height', `${CANVAS_RENDERED_HEIGHT_PX}px`);
+rootElement.style.setProperty('--canvas-width', `${CANVAS_RENDERED_WIDTH_PX}px`);
+rootElement.style.setProperty('--canvas-height', `${CANVAS_RENDERED_HEIGHT_PX}px`);
 
 // Internal drawing buffer (logical resolution)
 const CANVAS_BUFFER_WIDTH_PX = 256;
-const CANVAS_BUFFER_HEIGHT_PX = 433; // matches aspect ratio of 375x634 when scaled
+const CANVAS_BUFFER_HEIGHT_PX = CANVAS_RENDERED_HEIGHT_PX * (CANVAS_BUFFER_WIDTH_PX / CANVAS_RENDERED_WIDTH_PX); // Match aspect ratio of rendered size.
 
 
 canvasElement.width = CANVAS_BUFFER_WIDTH_PX;
