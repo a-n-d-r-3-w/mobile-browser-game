@@ -178,19 +178,19 @@ function initAfterAllImagesLoaded() {
                 activePointerId = event.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorRight, 50);
+                    holdRepeatIntervalId = setInterval(moveCursorRight, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
             } else if (isPointerOverUpButton) {
                 activePointerId = event.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorUp, 50);
+                    holdRepeatIntervalId = setInterval(moveCursorUp, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
             } else if (isPointerOverBottomButton) {
                 activePointerId = event.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorDown, 50);
+                    holdRepeatIntervalId = setInterval(moveCursorDown, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
             }
         });
