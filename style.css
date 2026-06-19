@@ -1,6 +1,8 @@
-html, body {
+html,
+body {
   margin: 0;
-  overscroll-behavior: none; /* Prevent scrolling. */
+  /* Prevent scrolling. */
+  overscroll-behavior: none;
   touch-action: none;
 }
 
@@ -16,7 +18,10 @@ canvas {
 /* DuckDuckGo browser (393px x 650px viewport) */
 /* iPhone Xs Safari (375px x 634px viewport) */
 #canvas {
-  width: 375px; /* CSS display width */
-  height: 634px; /* CSS display height */
-  image-rendering: pixelated; /* keep scaled pixels crisp for low-res art */
+  /* CSS display width */
+  width: var(--canvas-width);
+  /* CSS display height */
+  height: var(--canvas-height);
+  /* keep scaled pixels crisp for low-res art */
+  image-rendering: pixelated;
 }
