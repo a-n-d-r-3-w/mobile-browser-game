@@ -78,10 +78,7 @@ function render() {
     canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
     // Draw cursor.
-    const isCursorImageLoaded = cursorImageElement.complete && cursorImageElement.naturalWidth;
-    if (isCursorImageLoaded) {
-        canvasContext.drawImage(cursorImageElement, cursorXPosPx, cursorYPosPx);
-    }
+    canvasContext.drawImage(cursorImageElement, cursorXPosPx, cursorYPosPx);
 
     // draw semi-transparent rectangle for the clickable button areas on top
     canvasContext.save();
