@@ -63,9 +63,9 @@ let cursorYPosPx = 0;
 
 const DIRECTIONAL_BUTTON_SIZE_PX = 26;
 const leftButtonXPosPx = 19;
-const leftButtonYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - DIRECTIONAL_BUTTON_SIZE_PX - 51;
+const leftButtonYPosPx = 356;
 const rightButtonXPosPx = 89;
-const rightButtonYPosPx = leftButtonYPosPx;
+const rightButtonYPosPx = 356;
 
 function redrawScene() {
     // clear
