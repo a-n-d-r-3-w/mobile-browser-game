@@ -12,6 +12,17 @@ canvas.style.height = '634px';
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
+// Prevent pinch-to-zoom / multi-touch browser gestures on mobile
+window.addEventListener('touchmove', event => {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('gesturestart', event => event.preventDefault());
+document.addEventListener('gesturechange', event => event.preventDefault());
+document.addEventListener('gestureend', event => event.preventDefault());
+
 const Color = Object.freeze({
   RED_BROWN: "#a16600",
   BEIGE: "#ede791",

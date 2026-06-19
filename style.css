@@ -1,11 +1,13 @@
 html, body {
   margin: 0;
   overscroll-behavior: none; /* Prevent scrolling. */
+  touch-action: none;
 }
 
 canvas {
   display: block;
   margin: 0 auto;
+  touch-action: none;
 }
 
 /* Display size: scale the internal 256px canvas up to 375px */
