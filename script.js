@@ -146,6 +146,8 @@ function initAfterAllImagesLoaded() {
             render();
         };
 
+        const pauseBeforeRepeatMs = 500;
+        const repeatIntervalMs = 50;
         canvasElement.addEventListener('pointerdown', (event) => {
             if (activePointerId !== null) {
                 return;
@@ -170,26 +172,26 @@ function initAfterAllImagesLoaded() {
                 activePointerId = event.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorLeft, 50);
-                }, 500);
+                    holdRepeatIntervalId = setInterval(moveCursorLeft, repeatIntervalMs);
+                }, pauseBeforeRepeatMs);
             } else if (isPointerOverRightButton) {
                 activePointerId = event.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, 50);
-                }, 500);
+                }, pauseBeforeRepeatMs);
             } else if (isPointerOverUpButton) {
                 activePointerId = event.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorUp, 50);
-                }, 500);
+                }, pauseBeforeRepeatMs);
             } else if (isPointerOverBottomButton) {
                 activePointerId = event.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorDown, 50);
-                }, 500);
+                }, pauseBeforeRepeatMs);
             }
         });
 
