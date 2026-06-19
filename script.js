@@ -150,33 +150,33 @@ function initAfterAllImagesLoaded() {
             const pointerXPosPx = (ev.clientX - canvasBoundingRect.left) * canvasScaleX;
             const pointerYPosPx = (ev.clientY - canvasBoundingRect.top) * canvasScaleY;
 
-            const isLeftButtonPressed = pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isPointerOverLeftButton = pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isRightButtonPressed = pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isPointerOverRightButton = pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isTopButtonPressed = pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isPointerOverUpButton = pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isBottomButtonPressed = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isPointerOverBottomButton = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            if (isLeftButtonPressed) {
+            if (isPointerOverLeftButton) {
                 activePointerId = ev.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorLeft, 50);
                 }, 500);
-            } else if (isRightButtonPressed) {
+            } else if (isPointerOverRightButton) {
                 activePointerId = ev.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, 50);
                 }, 500);
-            } else if (isTopButtonPressed) {
+            } else if (isPointerOverUpButton) {
                 activePointerId = ev.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorUp, 50);
                 }, 500);
-            } else if (isBottomButtonPressed) {
+            } else if (isPointerOverBottomButton) {
                 activePointerId = ev.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
