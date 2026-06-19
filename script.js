@@ -97,6 +97,7 @@ function redrawScene() {
 
 // Load images; when all required images are available, initialize cursor and handlers
 let imagesLoaded = 0;
+const cursorMoveDistance = 2;
 function checkInit() {
   imagesLoaded++;
   if (imagesLoaded === 3) {
@@ -107,7 +108,32 @@ function checkInit() {
     cursorY = bgY + Math.floor((backgroundImage.height - cursorImage.height) / 2);
     redrawScene();
 
-    // pointer handling: move cursor left 1px when clicking the 26x26 bottom-left square
+    let holdTimeout = null;
+    let holdInterval = null;
+    let activePointerId = null;
+
+    const clearHold = () => {
+      if (holdTimeout !== null) {
+        clearTimeout(holdTimeout);
+        holdTimeout = null;
+      }
+      if (holdInterval !== null) {
+        clearInterval(holdInterval);
+        holdInterval = null;
+      }
+      activePointerId = null;
+    };
+
+    const moveCursorLeft = () => {
+      cursorX = Math.max(0, cursorX - cursorMoveDistance);
+      redrawScene();
+    };
+
+    const moveCursorRight = () => {
+      cursorX = Math.min(INTERNAL_WIDTH - cursorImage.width, cursorX + cursorMoveDistance);
+      redrawScene();
+    };
+
     canvas.addEventListener('pointerdown', (ev) => {
       const rect = canvas.getBoundingClientRect();
       const scaleX = canvas.width / rect.width;
@@ -116,15 +142,31 @@ function checkInit() {
       const y = (ev.clientY - rect.top) * scaleY;
 
       if (x >= leftButtonX && x < leftButtonX + buttonWidth && y >= leftButtonY && y < leftButtonY + buttonHeight) {
-        // move cursor left one pixel, clamp to 0
-        cursorX = Math.max(0, cursorX - 1);
-        redrawScene();
+        activePointerId = ev.pointerId;
+        moveCursorLeft();
+        holdTimeout = setTimeout(() => {
+          holdInterval = setInterval(moveCursorLeft, 50);
+        }, 500);
+      } else if (x >= rightButtonX && x < rightButtonX + buttonWidth && y >= rightButtonY && y < rightButtonY + buttonHeight) {
+        moveCursorRight();
       }
+    });
 
-      if (x >= rightButtonX && x < rightButtonX + buttonWidth && y >= rightButtonY && y < rightButtonY + buttonHeight) {
-        // move cursor right one pixel, clamp to canvas width
-        cursorX = Math.min(INTERNAL_WIDTH - cursorImage.width, cursorX + 1);
-        redrawScene();
+    canvas.addEventListener('pointerup', (ev) => {
+      if (ev.pointerId === activePointerId) {
+        clearHold();
+      }
+    });
+
+    canvas.addEventListener('pointercancel', (ev) => {
+      if (ev.pointerId === activePointerId) {
+        clearHold();
+      }
+    });
+
+    canvas.addEventListener('pointerleave', (ev) => {
+      if (ev.pointerId === activePointerId) {
+        clearHold();
       }
     });
   }
