@@ -13,8 +13,6 @@ const CANVAS_BUFFER_HEIGHT_PX = 433; // matches aspect ratio of 375x634 when sca
 
 canvasElement.width = CANVAS_BUFFER_WIDTH_PX;
 canvasElement.height = CANVAS_BUFFER_HEIGHT_PX;
-canvasElement.style.width = `${CANVAS_RENDERED_WIDTH_PX}px`;
-canvasElement.style.height = `${CANVAS_RENDERED_HEIGHT_PX}px`;
 
 const canvasContext = canvasElement.getContext("2d");
 canvasContext.imageSmoothingEnabled = false;
