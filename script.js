@@ -61,7 +61,18 @@ controllerImage.src = 'controller.png';
 const backgroundImage = new Image();
 backgroundImage.onload = () => {
   // Position so bottom edge aligns with controller's top edge
-  ctx.drawImage(backgroundImage, 0, INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height);
+  const bgX = 0;
+  const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
+  ctx.drawImage(backgroundImage, bgX, bgY);
+
+  // Draw blue cursor centered over the background image
+  const cursor = new Image();
+  cursor.onload = () => {
+    const cursorX = bgX + Math.floor((backgroundImage.width - cursor.width) / 2);
+    const cursorY = bgY + Math.floor((backgroundImage.height - cursor.height) / 2);
+    ctx.drawImage(cursor, cursorX, cursorY);
+  };
+  cursor.src = 'blue-cursor.png';
 };
 backgroundImage.src = 'background.png';
 
