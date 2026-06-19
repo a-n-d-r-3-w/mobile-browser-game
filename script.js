@@ -68,10 +68,12 @@ function redrawScene() {
   const controllerY = INTERNAL_HEIGHT - controllerImage.height;
   const bgX = 0;
   const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
-  const squareW = 26;
-  const squareH = 26;
-  const squareX = 19;
-  const squareY = INTERNAL_HEIGHT - squareH - 51;
+  const buttonWidth = 26;
+  const buttonHeight = 26;
+  const leftButtonX = 19;
+  const leftButtonY = INTERNAL_HEIGHT - buttonHeight - 51;
+  const rightButtonX = 89;
+  const rightButtonY = leftButtonY;
 
   // draw background, cursor, controller in order
   ctx.drawImage(backgroundImage, bgX, bgY);
@@ -83,7 +85,12 @@ function redrawScene() {
   // draw semi-transparent rectangle for the clickable 26x26 area on top
   ctx.save();
   ctx.fillStyle = 'rgba(0, 255, 115, 0.25)';
-  ctx.fillRect(squareX, squareY, squareW, squareH);
+  ctx.fillRect(leftButtonX, leftButtonY, buttonWidth, buttonHeight);
+  ctx.restore();
+
+  ctx.save();
+  ctx.fillStyle = 'rgba(0, 255, 115, 0.25)';
+  ctx.fillRect(rightButtonX, rightButtonY, buttonWidth, buttonHeight);
   ctx.restore();
 }
 
@@ -107,14 +114,22 @@ function checkInit() {
       const x = (ev.clientX - rect.left) * scaleX;
       const y = (ev.clientY - rect.top) * scaleY;
 
-      const squareW = 26;
-      const squareH = 26;
-      const squareX = 19; // moved right by 19px
-      const squareY = INTERNAL_HEIGHT - squareH - 51; // moved up by 51px
+      const buttonWidth = 26;
+      const buttonHeight = 26;
+      const leftButtonX = 19; // moved right by 19px
+      const leftButtonY = INTERNAL_HEIGHT - buttonHeight - 51; // moved up by 51px
+      const rightButtonX = 89; // moved right by 89px
+      const rightButtonY = leftButtonY; // same Y position as left button
 
-      if (x >= squareX && x < squareX + squareW && y >= squareY && y < squareY + squareH) {
+      if (x >= leftButtonX && x < leftButtonX + buttonWidth && y >= leftButtonY && y < leftButtonY + buttonHeight) {
         // move cursor left one pixel, clamp to 0
         cursorX = Math.max(0, cursorX - 1);
+        redrawScene();
+      }
+
+      if (x >= rightButtonX && x < rightButtonX + buttonWidth && y >= rightButtonY && y < rightButtonY + buttonHeight) {
+        // move cursor right one pixel, clamp to canvas width
+        cursorX = Math.min(INTERNAL_WIDTH - cursorImage.width, cursorX + 1);
         redrawScene();
       }
     });
