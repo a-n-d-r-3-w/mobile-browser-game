@@ -114,7 +114,7 @@ function initAfterAllImagesLoaded() {
         let holdRepeatIntervalId = null;
         let activePointerId = null;
 
-        const clearButtonHold = () => {
+        const liftButton = () => {
             if (holdDelayTimeoutId !== null) {
                 clearTimeout(holdDelayTimeoutId);
                 holdDelayTimeoutId = null;
@@ -197,19 +197,19 @@ function initAfterAllImagesLoaded() {
 
         canvasElement.addEventListener('pointerup', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearButtonHold();
+                liftButton();
             }
         });
 
         canvasElement.addEventListener('pointercancel', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearButtonHold();
+                liftButton();
             }
         });
 
         canvasElement.addEventListener('pointerleave', (ev) => {
             if (ev.pointerId === activePointerId) {
-                clearButtonHold();
+                liftButton();
             }
         });
     }
