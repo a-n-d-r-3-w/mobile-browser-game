@@ -1,0 +1,1 @@
+Always store numbers in a variable, with a variable name that describes what the variable represents. Include units where applicable, for example, time units or pixel units.
