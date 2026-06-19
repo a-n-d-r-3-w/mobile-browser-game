@@ -54,18 +54,16 @@ const CommandCursorColor = "#0056ff";
 canvasContext.fillStyle = "#ffffff"; // white
 canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
-const controllerImageElement = new Image();
 const backgroundImageElement = new Image();
+const controllerImageElement = new Image();
 const cursorImageElement = new Image();
 
-// State for cursor position (in canvas logical pixels)
 let cursorXPosPx = 0;
 let cursorYPosPx = 0;
 
-const buttonWidthPx = 26;
-const buttonHeightPx = 26;
+const DIRECTIONAL_BUTTON_SIZE_PX = 26;
 const leftButtonXPosPx = 19;
-const leftButtonYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - buttonHeightPx - 51;
+const leftButtonYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - DIRECTIONAL_BUTTON_SIZE_PX - 51;
 const rightButtonXPosPx = 89;
 const rightButtonYPosPx = leftButtonYPosPx;
 
@@ -89,12 +87,12 @@ function redrawScene() {
     // draw semi-transparent rectangle for the clickable button areas on top
     canvasContext.save();
     canvasContext.fillStyle = 'rgba(0, 255, 115, 0.25)';
-    canvasContext.fillRect(leftButtonXPosPx, leftButtonYPosPx, buttonWidthPx, buttonHeightPx);
+    canvasContext.fillRect(leftButtonXPosPx, leftButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.restore();
 
     canvasContext.save();
     canvasContext.fillStyle = 'rgba(0, 255, 115, 0.25)';
-    canvasContext.fillRect(rightButtonXPosPx, rightButtonYPosPx, buttonWidthPx, buttonHeightPx);
+    canvasContext.fillRect(rightButtonXPosPx, rightButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.restore();
 }
 
@@ -144,13 +142,13 @@ function checkInit() {
             const pointerXPosPx = (ev.clientX - canvasBoundingRect.left) * canvasScaleX;
             const pointerYPosPx = (ev.clientY - canvasBoundingRect.top) * canvasScaleY;
 
-            if (pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + buttonWidthPx && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + buttonHeightPx) {
+            if (pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
                 activePointerId = ev.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorLeft, 50);
                 }, 500);
-            } else if (pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + buttonWidthPx && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + buttonHeightPx) {
+            } else if (pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX) {
                 activePointerId = ev.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
