@@ -66,6 +66,10 @@ const leftButtonXPosPx = 19;
 const leftButtonYPosPx = 356;
 const rightButtonXPosPx = 89;
 const rightButtonYPosPx = 356;
+const topButtonXPosPx = 53;
+const topButtonYPosPx = 321;
+const bottomButtonXPosPx = 53;
+const bottomButtonYPosPx = 391;
 
 function render() {
     // Draw background.
@@ -84,11 +88,9 @@ function render() {
     canvasContext.save();
     canvasContext.fillStyle = 'rgba(0, 255, 115, 0.25)';
     canvasContext.fillRect(leftButtonXPosPx, leftButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
-    canvasContext.restore();
-
-    canvasContext.save();
-    canvasContext.fillStyle = 'rgba(0, 255, 115, 0.25)';
     canvasContext.fillRect(rightButtonXPosPx, rightButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
+    canvasContext.fillRect(topButtonXPosPx, topButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
+    canvasContext.fillRect(bottomButtonXPosPx, bottomButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.restore();
 }
 
