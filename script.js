@@ -144,6 +144,10 @@ function initAfterAllImagesLoaded() {
         };
 
         canvasElement.addEventListener('pointerdown', (event) => {
+            if (activePointerId !== null) {
+                return;
+            }
+
             const canvasBoundingRect = canvasElement.getBoundingClientRect();
             const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
             const canvasScaleY = canvasElement.height / canvasBoundingRect.height;
