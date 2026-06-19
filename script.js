@@ -26,6 +26,9 @@ document.addEventListener('gesturestart', event => event.preventDefault());
 document.addEventListener('gesturechange', event => event.preventDefault());
 document.addEventListener('gestureend', event => event.preventDefault());
 
+// Prevent right-click context menu from appearing.
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 const Color = Object.freeze({
     RED_BROWN: "#a16600",
     BEIGE: "#ede791",

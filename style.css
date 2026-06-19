@@ -4,12 +4,20 @@ body {
   /* Prevent scrolling. */
   overscroll-behavior: none;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 canvas {
   display: block;
   margin: 0 auto;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Display size: scale the internal 256px canvas up to 375px */
