@@ -1,0 +1,16 @@
+html, body {
+  margin: 0;
+  overscroll-behavior: none; /* Prevent scrolling. */
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Display size: scale the internal 256px canvas up to 375px */
+#canvas {
+  width: 375px; /* CSS display width */
+  height: 634px; /* CSS display height */
+  image-rendering: pixelated; /* keep scaled pixels crisp for low-res art */
+}
