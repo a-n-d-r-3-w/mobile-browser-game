@@ -148,7 +148,11 @@ function checkInit() {
           holdInterval = setInterval(moveCursorLeft, 50);
         }, 500);
       } else if (x >= rightButtonX && x < rightButtonX + buttonWidth && y >= rightButtonY && y < rightButtonY + buttonHeight) {
+        activePointerId = ev.pointerId;
         moveCursorRight();
+        holdTimeout = setTimeout(() => {
+          holdInterval = setInterval(moveCursorRight, 50);
+        }, 500);
       }
     });
 
