@@ -64,15 +64,15 @@ const cursorImageElement = new Image();
 let cursorXPosPx = 0;
 let cursorYPosPx = 0;
 
-const DIRECTIONAL_BUTTON_SIZE_PX = 26;
-const leftButtonXPosPx = 19;
-const leftButtonYPosPx = 356;
-const rightButtonXPosPx = 89;
-const rightButtonYPosPx = 356;
-const topButtonXPosPx = 53;
-const topButtonYPosPx = 321;
-const bottomButtonXPosPx = 53;
-const bottomButtonYPosPx = 391;
+const DIRECTIONAL_BUTTON_SIZE_PX = 34;
+const leftButtonXPosPx = 14;
+const leftButtonYPosPx = 352;
+const rightButtonXPosPx = 84;
+const rightButtonYPosPx = 352;
+const topButtonXPosPx = 49;
+const topButtonYPosPx = 316;
+const bottomButtonXPosPx = 49;
+const bottomButtonYPosPx = 388;
 
 function render() {
     // Draw background.
