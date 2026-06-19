@@ -4,14 +4,26 @@
     <title>Mobile Browser Game</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet" type="text/css" media="all">
-    <script src="script.js" defer></script>
-  </head>
+
+    <!-- Cache buster -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+      const cacheBuster = Date.now();
+      const styleLink = document.createElement('link');
+      styleLink.rel = 'stylesheet';
+      styleLink.href = `style.css?cachebust=${cacheBuster}`;
+      document.head.appendChild(styleLink);
+      const script = document.createElement('script');
+      script.defer = true;
+      script.src = `script.js?cachebust=${cacheBuster}`;
+      document.head.appendChild(script);
+    </script>
+
+</head>
   <body>
-    <!-- Canvas dimensions are hard-coded to fit on the following mobile browsers. -->
-    <!-- Apple iPhone 15 Safari (393px x 695px viewport) -->
-    <!-- DuckDuckGo browser (393px x 650px viewport) -->
-    <!-- iPhone Xs Safari (375px x 634px viewport) -->
+    <!-- NES width -->
     <canvas id="canvas" width="256" height="433"> 
     </canvas>
     
