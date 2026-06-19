@@ -37,7 +37,7 @@ const CastleLineColor = Object.freeze({
 const CommandCursorColor = "#0056ff";
 
 // Draw background and a sample green area at logical coordinates
-ctx.fillStyle = Color.RED_BROWN;
+ctx.fillStyle = Color.BLACK;
 ctx.fillRect(0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT);
 ctx.fillStyle = Color.GREEN;
 ctx.fillRect(0, 0, 256, 224);
