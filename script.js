@@ -36,8 +36,13 @@ const CastleLineColor = Object.freeze({
 
 const CommandCursorColor = "#0056ff";
 
-// Draw background and a sample green area at logical coordinates
-ctx.fillStyle = Color.RED_BROWN;
+// Draw a base background color before the image loads.
+ctx.fillStyle = Color.BLACK;
 ctx.fillRect(0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT);
-ctx.fillStyle = Color.GREEN;
-ctx.fillRect(0, 0, 256, 224);
+
+const backgroundImage = new Image();
+backgroundImage.onload = () => {
+  ctx.drawImage(backgroundImage, 0, 0);
+};
+backgroundImage.src = 'background.png';
+
