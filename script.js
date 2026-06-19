@@ -46,3 +46,10 @@ backgroundImage.onload = () => {
 };
 backgroundImage.src = 'background.png';
 
+const controllerImage = new Image();
+controllerImage.onload = () => {
+  // Position at the bottom of the canvas
+  ctx.drawImage(controllerImage, 0, INTERNAL_HEIGHT - controllerImage.height);
+};
+controllerImage.src = 'controller.png';
+
