@@ -68,17 +68,20 @@ const rightButtonXPosPx = 89;
 const rightButtonYPosPx = 356;
 
 function render() {
-    // compute positions
-    const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
+    // Draw background.
     const backgroundXPosPx = 0;
     const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
 
-    // draw background, cursor, controller in order
     canvasContext.drawImage(backgroundImageElement, backgroundXPosPx, backgroundYPosPx);
+
+    // Draw controller.
+    const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
+    canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
+
+    // Draw cursor on top.
     if (cursorImageElement.complete && cursorImageElement.naturalWidth) {
         canvasContext.drawImage(cursorImageElement, cursorXPosPx, cursorYPosPx);
     }
-    canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
     // draw semi-transparent rectangle for the clickable button areas on top
     canvasContext.save();
