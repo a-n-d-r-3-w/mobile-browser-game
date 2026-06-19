@@ -59,6 +59,13 @@ const cursorImage = new Image();
 let cursorX = 0;
 let cursorY = 0;
 
+const buttonWidth = 26;
+const buttonHeight = 26;
+const leftButtonX = 19;
+const leftButtonY = INTERNAL_HEIGHT - buttonHeight - 51;
+const rightButtonX = 89;
+const rightButtonY = leftButtonY;
+
 function redrawScene() {
   // clear
   ctx.fillStyle = "#ffffff";
@@ -68,12 +75,6 @@ function redrawScene() {
   const controllerY = INTERNAL_HEIGHT - controllerImage.height;
   const bgX = 0;
   const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
-  const buttonWidth = 26;
-  const buttonHeight = 26;
-  const leftButtonX = 19;
-  const leftButtonY = INTERNAL_HEIGHT - buttonHeight - 51;
-  const rightButtonX = 89;
-  const rightButtonY = leftButtonY;
 
   // draw background, cursor, controller in order
   ctx.drawImage(backgroundImage, bgX, bgY);
@@ -113,13 +114,6 @@ function checkInit() {
       const scaleY = canvas.height / rect.height;
       const x = (ev.clientX - rect.left) * scaleX;
       const y = (ev.clientY - rect.top) * scaleY;
-
-      const buttonWidth = 26;
-      const buttonHeight = 26;
-      const leftButtonX = 19; // moved right by 19px
-      const leftButtonY = INTERNAL_HEIGHT - buttonHeight - 51; // moved up by 51px
-      const rightButtonX = 89; // moved right by 89px
-      const rightButtonY = leftButtonY; // same Y position as left button
 
       if (x >= leftButtonX && x < leftButtonX + buttonWidth && y >= leftButtonY && y < leftButtonY + buttonHeight) {
         // move cursor left one pixel, clamp to 0
