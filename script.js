@@ -67,11 +67,7 @@ const leftButtonYPosPx = 356;
 const rightButtonXPosPx = 89;
 const rightButtonYPosPx = 356;
 
-function redrawScene() {
-    // clear
-    canvasContext.fillStyle = "#ffffff";
-    canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
-
+function render() {
     // compute positions
     const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
     const backgroundXPosPx = 0;
@@ -99,7 +95,7 @@ function redrawScene() {
 // Load images; when all required images are available, initialize cursor and handlers
 let loadedImageCount = 0;
 const cursorMoveDistancePx = 2;
-function checkInit() {
+function initAfterAllImagesLoaded() {
     loadedImageCount++;
     if (loadedImageCount === 3) {
         // center cursor over background by default
@@ -107,7 +103,7 @@ function checkInit() {
         const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
         cursorXPosPx = backgroundXPosPx + Math.floor((backgroundImageElement.width - cursorImageElement.width) / 2);
         cursorYPosPx = backgroundYPosPx + Math.floor((backgroundImageElement.height - cursorImageElement.height) / 2);
-        redrawScene();
+        render();
 
         let holdDelayTimeoutId = null;
         let holdRepeatIntervalId = null;
@@ -127,12 +123,12 @@ function checkInit() {
 
         const moveCursorLeft = () => {
             cursorXPosPx = Math.max(0, cursorXPosPx - cursorMoveDistancePx);
-            redrawScene();
+            render();
         };
 
         const moveCursorRight = () => {
             cursorXPosPx = Math.min(CANVAS_DRAWING_BUFFER_WIDTH_PX - cursorImageElement.width, cursorXPosPx + cursorMoveDistancePx);
-            redrawScene();
+            render();
         };
 
         canvasElement.addEventListener('pointerdown', (ev) => {
@@ -177,10 +173,10 @@ function checkInit() {
     }
 }
 
-controllerImageElement.onload = checkInit;
+controllerImageElement.onload = initAfterAllImagesLoaded;
 controllerImageElement.src = 'controller.png';
-backgroundImageElement.onload = checkInit;
+backgroundImageElement.onload = initAfterAllImagesLoaded;
 backgroundImageElement.src = 'background.png';
-cursorImageElement.onload = checkInit;
+cursorImageElement.onload = initAfterAllImagesLoaded;
 cursorImageElement.src = 'blue-cursor.png';
 
