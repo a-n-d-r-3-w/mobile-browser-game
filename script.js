@@ -52,27 +52,69 @@ ctx.fillStyle = "#ffffff"; // white
 ctx.fillRect(0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT);
 
 const controllerImage = new Image();
-controllerImage.onload = () => {
-  // Position at the bottom of the canvas, right below the background
-  ctx.drawImage(controllerImage, 0, INTERNAL_HEIGHT - controllerImage.height);
-};
-controllerImage.src = 'controller.png';
-
 const backgroundImage = new Image();
-backgroundImage.onload = () => {
-  // Position so bottom edge aligns with controller's top edge
+const cursorImage = new Image();
+
+// State for cursor position (in canvas logical pixels)
+let cursorX = 0;
+let cursorY = 0;
+
+function redrawScene() {
+  // clear
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT);
+
+  // compute positions
+  const controllerY = INTERNAL_HEIGHT - controllerImage.height;
   const bgX = 0;
   const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
-  ctx.drawImage(backgroundImage, bgX, bgY);
 
-  // Draw blue cursor centered over the background image
-  const cursor = new Image();
-  cursor.onload = () => {
-    const cursorX = bgX + Math.floor((backgroundImage.width - cursor.width) / 2);
-    const cursorY = bgY + Math.floor((backgroundImage.height - cursor.height) / 2);
-    ctx.drawImage(cursor, cursorX, cursorY);
-  };
-  cursor.src = 'blue-cursor.png';
-};
+  // draw background, cursor, controller in order
+  ctx.drawImage(backgroundImage, bgX, bgY);
+  if (cursorImage.complete && cursorImage.naturalWidth) {
+    ctx.drawImage(cursorImage, cursorX, cursorY);
+  }
+  ctx.drawImage(controllerImage, 0, controllerY);
+}
+
+// Load images; when all required images are available, initialize cursor and handlers
+let imagesLoaded = 0;
+function checkInit() {
+  imagesLoaded++;
+  if (imagesLoaded === 3) {
+    // center cursor over background by default
+    const bgX = 0;
+    const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
+    cursorX = bgX + Math.floor((backgroundImage.width - cursorImage.width) / 2);
+    cursorY = bgY + Math.floor((backgroundImage.height - cursorImage.height) / 2);
+    redrawScene();
+
+    // pointer handling: move cursor left 1px when clicking the 26x26 bottom-left square
+    canvas.addEventListener('pointerdown', (ev) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (ev.clientX - rect.left) * scaleX;
+      const y = (ev.clientY - rect.top) * scaleY;
+
+      const squareW = 26;
+      const squareH = 26;
+      const squareX = 18; // moved right by 18px
+      const squareY = INTERNAL_HEIGHT - squareH - 50; // moved up by 50px
+
+      if (x >= squareX && x < squareX + squareW && y >= squareY && y < squareY + squareH) {
+        // move cursor left one pixel, clamp to 0
+        cursorX = Math.max(0, cursorX - 1);
+        redrawScene();
+      }
+    });
+  }
+}
+
+controllerImage.onload = checkInit;
+controllerImage.src = 'controller.png';
+backgroundImage.onload = checkInit;
 backgroundImage.src = 'background.png';
+cursorImage.onload = checkInit;
+cursorImage.src = 'blue-cursor.png';
 
