@@ -68,6 +68,10 @@ function redrawScene() {
   const controllerY = INTERNAL_HEIGHT - controllerImage.height;
   const bgX = 0;
   const bgY = INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height;
+  const squareW = 26;
+  const squareH = 26;
+  const squareX = 19;
+  const squareY = INTERNAL_HEIGHT - squareH - 51;
 
   // draw background, cursor, controller in order
   ctx.drawImage(backgroundImage, bgX, bgY);
@@ -75,6 +79,12 @@ function redrawScene() {
     ctx.drawImage(cursorImage, cursorX, cursorY);
   }
   ctx.drawImage(controllerImage, 0, controllerY);
+
+  // draw semi-transparent rectangle for the clickable 26x26 area on top
+  ctx.save();
+  ctx.fillStyle = 'rgba(0, 255, 115, 0.25)';
+  ctx.fillRect(squareX, squareY, squareW, squareH);
+  ctx.restore();
 }
 
 // Load images; when all required images are available, initialize cursor and handlers
@@ -99,8 +109,8 @@ function checkInit() {
 
       const squareW = 26;
       const squareH = 26;
-      const squareX = 18; // moved right by 18px
-      const squareY = INTERNAL_HEIGHT - squareH - 50; // moved up by 50px
+      const squareX = 19; // moved right by 19px
+      const squareY = INTERNAL_HEIGHT - squareH - 51; // moved up by 51px
 
       if (x >= squareX && x < squareX + squareW && y >= squareY && y < squareY + squareH) {
         // move cursor left one pixel, clamp to 0
