@@ -36,20 +36,21 @@ const CastleLineColor = Object.freeze({
 
 const CommandCursorColor = "#0056ff";
 
-// Draw a base background color before the image loads.
-ctx.fillStyle = Color.BLACK;
+// Draw a base background color before the images load.
+ctx.fillStyle = "#ffffff"; // white
 ctx.fillRect(0, 0, INTERNAL_WIDTH, INTERNAL_HEIGHT);
-
-const backgroundImage = new Image();
-backgroundImage.onload = () => {
-  ctx.drawImage(backgroundImage, 0, 0);
-};
-backgroundImage.src = 'background.png';
 
 const controllerImage = new Image();
 controllerImage.onload = () => {
-  // Position at the bottom of the canvas
+  // Position at the bottom of the canvas, right below the background
   ctx.drawImage(controllerImage, 0, INTERNAL_HEIGHT - controllerImage.height);
 };
 controllerImage.src = 'controller.png';
+
+const backgroundImage = new Image();
+backgroundImage.onload = () => {
+  // Position so bottom edge aligns with controller's top edge
+  ctx.drawImage(backgroundImage, 0, INTERNAL_HEIGHT - controllerImage.height - backgroundImage.height);
+};
+backgroundImage.src = 'background.png';
 
