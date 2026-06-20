@@ -32,10 +32,10 @@ document.addEventListener('gestureend', event => event.preventDefault());
 document.addEventListener('contextmenu', event => event.preventDefault());
 
 // Show alert if using iOS Safari.
-const isIosSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-if (isIosSafari) {
-    alert('Safari deletes a website\'s stored data after 7 days of inactivity. To help prevent data loss, add this website to your home screen and open it from there.');
-}
+// const isIosSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+// if (isIosSafari) {
+//     alert('Safari deletes a website\'s stored data after 7 days of inactivity. To help prevent data loss, add this website to your home screen and open it from there.');
+// }
 
 // Draw a base background color before the images load.
 canvasContext.fillStyle = "#ffffff"; // white
