@@ -58,11 +58,42 @@ const topButtonYPosPx = 316;
 const bottomButtonXPosPx = 49;
 const bottomButtonYPosPx = 388;
 
+function renderGrid() {
+    const gridSizePx = 16;
+    canvasContext.save();
+    canvasContext.strokeStyle = '#554894';
+    canvasContext.lineWidth = 1;
+
+    for (let x = gridSizePx; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += gridSizePx) {
+        canvasContext.beginPath();
+        canvasContext.moveTo(x + 0.5, 0);
+        canvasContext.lineTo(x + 0.5, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
+        canvasContext.stroke();
+    }
+
+    for (let y = gridSizePx; y < CANVAS_DRAWING_BUFFER_HEIGHT_PX; y += gridSizePx) {
+        canvasContext.beginPath();
+        canvasContext.moveTo(0, y + 0.5);
+        canvasContext.lineTo(CANVAS_DRAWING_BUFFER_WIDTH_PX, y + 0.5);
+        canvasContext.stroke();
+    }
+
+    canvasContext.restore();
+}
+
 function render() {
     // Draw background.
     const backgroundXPosPx = 0;
     const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
     canvasContext.drawImage(backgroundImageElement, backgroundXPosPx, backgroundYPosPx);
+
+    renderGrid();
+
+    // Draw white area at top.
+    canvasContext.save();
+    canvasContext.fillStyle = '#ffffff';
+    canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, backgroundYPosPx);
+    canvasContext.restore();
 
     // Draw controller.
     const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
