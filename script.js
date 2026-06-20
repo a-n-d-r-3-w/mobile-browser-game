@@ -1,5 +1,3 @@
-
-
 const rootElement = document.documentElement;
 const canvasElement = document.getElementById("canvas");
 
@@ -46,6 +44,14 @@ const controllerImageElement = new Image();
 const cursorImageElement = new Image();
 const optimusImageElement = new Image();
 
+const entities = [
+    {
+        name: 'Optimus Prime',
+        imageElement: optimusImageElement,
+        position: { col: 11, row: 12 },
+    }
+];
+
 const DIRECTIONAL_BUTTON_SIZE_PX = 34;
 const ACTION_BUTTON_SIZE_PX = 45;
 const leftButtonXPosPx = 14;
@@ -66,9 +72,9 @@ const NES_WIDTH_PX = 256;
 const NES_HEIGHT_PX = 240;
 const numCols = NES_WIDTH_PX / GRID_SIZE_PX;
 const numRows = NES_HEIGHT_PX / GRID_SIZE_PX;
-const cursorPosGu = { // Gu means "grid units".
-    x: 8,
-    y: 8,
+const cursorPos = {
+    col: 8,
+    row: 8,
 }
 
 function renderGrid() {
@@ -111,13 +117,15 @@ function render() {
     const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
     canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
-    // Draw Optimus.
-    canvasContext.drawImage(optimusImageElement, 11 * GRID_SIZE_PX, backgroundYPosPx + 12 * GRID_SIZE_PX);
+    // Draw entities.
+    for (const entity of entities) {
+        canvasContext.drawImage(entity.imageElement, backgroundXPosPx + entity.position.col * GRID_SIZE_PX, backgroundYPosPx + entity.position.row * GRID_SIZE_PX);
+    }
 
     // Draw cursor.
     canvasContext.drawImage(cursorImageElement,
-        backgroundXPosPx + cursorPosGu.x * GRID_SIZE_PX + GRID_SIZE_PX / 2,
-        backgroundYPosPx + cursorPosGu.y * GRID_SIZE_PX + GRID_SIZE_PX / 2
+        backgroundXPosPx + cursorPos.col * GRID_SIZE_PX + GRID_SIZE_PX / 2,
+        backgroundYPosPx + cursorPos.row * GRID_SIZE_PX + GRID_SIZE_PX / 2
     );
 
     // draw semi-transparent rectangle for the clickable button areas on top
@@ -161,36 +169,36 @@ function initAfterAllImagesLoaded() {
         };
 
         const moveCursorLeft = () => {
-            cursorPosGu.x = Math.max(0, cursorPosGu.x - 1);
+            cursorPos.col = Math.max(0, cursorPos.col - 1);
             render();
         };
 
         const moveCursorRight = () => {
-            cursorPosGu.x = Math.min(numCols - 1, cursorPosGu.x + 1);
+            cursorPos.col = Math.min(numCols - 1, cursorPos.col + 1);
             render();
         };
 
         const moveCursorUp = () => {
-            cursorPosGu.y = Math.max(0, cursorPosGu.y - 1);
+            cursorPos.row = Math.max(0, cursorPos.row - 1);
             render();
         };
 
         const moveCursorDown = () => {
-            cursorPosGu.y = Math.min(numRows - 1, cursorPosGu.y + 1);
+            cursorPos.row = Math.min(numRows - 1, cursorPos.row + 1);
             render();
         };
 
         const pressBButton = () => {
             // For demonstration, move cursor to top-left when B button is pressed.
-            cursorPosGu.x = 0;
-            cursorPosGu.y = 0;
+            cursorPos.col = 0;
+            cursorPos.row = 0;
             render();
         }
 
         const pressAButton = () => {
             // For demonstration, move cursor to bottom-right when A button is pressed.
-            cursorPosGu.x = numCols - 1;
-            cursorPosGu.y = numRows - 1;
+            cursorPos.col = numCols - 1;
+            cursorPos.row = numRows - 1;
             render();
         }
 
