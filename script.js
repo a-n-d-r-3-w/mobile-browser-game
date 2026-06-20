@@ -176,6 +176,20 @@ function initAfterAllImagesLoaded() {
             render();
         };
 
+        const pressBButton = () => {
+            // For demonstration, move cursor to top-left when B button is pressed.
+            cursorPosGu.x = 0;
+            cursorPosGu.y = 0;
+            render();
+        }
+
+        const pressAButton = () => {
+            // For demonstration, move cursor to bottom-right when A button is pressed.
+            cursorPosGu.x = numCols - 1;
+            cursorPosGu.y = numRows - 1;
+            render();
+        }
+
         const pauseBeforeRepeatMs = 500;
         const repeatIntervalMs = 50;
         canvasElement.addEventListener('pointerdown', (event) => {
@@ -197,6 +211,10 @@ function initAfterAllImagesLoaded() {
             const isPointerOverUpButton = pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
             const isPointerOverBottomButton = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+
+            const isPointerOverBButton = pointerXPosPx >= B_BUTTON_X_POS_PX && pointerXPosPx < B_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && pointerYPosPx >= B_BUTTON_Y_POS_PX && pointerYPosPx < B_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
+
+            const isPointerOverAButton = pointerXPosPx >= A_BUTTON_X_POS_PX && pointerXPosPx < A_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && pointerYPosPx >= A_BUTTON_Y_POS_PX && pointerYPosPx < A_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
 
             if (isPointerOverLeftButton) {
                 activePointerId = event.pointerId;
@@ -222,6 +240,12 @@ function initAfterAllImagesLoaded() {
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorDown, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
+            } else if (isPointerOverBButton) {
+                activePointerId = event.pointerId;
+                pressBButton();
+            } else if (isPointerOverAButton) {
+                activePointerId = event.pointerId;
+                pressAButton();
             }
         });
 
