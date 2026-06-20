@@ -154,7 +154,7 @@ function initAfterAllImagesLoaded() {
 
         let holdDelayTimeoutId = null;
         let holdRepeatIntervalId = null;
-        let activePointerId = null;
+        let activeTouchId = null;
 
         const liftButton = () => {
             if (holdDelayTimeoutId !== null) {
@@ -165,7 +165,7 @@ function initAfterAllImagesLoaded() {
                 clearInterval(holdRepeatIntervalId);
                 holdRepeatIntervalId = null;
             }
-            activePointerId = null;
+            activeTouchId = null;
         };
 
         const moveCursorLeft = () => {
@@ -205,7 +205,7 @@ function initAfterAllImagesLoaded() {
         const pauseBeforeRepeatMs = 500;
         const repeatIntervalMs = 50;
         canvasElement.addEventListener('pointerdown', (event) => {
-            if (activePointerId !== null) {
+            if (activeTouchId !== null) {
                 return;
             }
 
@@ -213,68 +213,68 @@ function initAfterAllImagesLoaded() {
             const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
             const canvasScaleY = canvasElement.height / canvasBoundingRect.height;
 
-            const pointerXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
-            const pointerYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
+            const touchXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
+            const touchYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
 
-            const isPointerOverLeftButton = pointerXPosPx >= leftButtonXPosPx && pointerXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= leftButtonYPosPx && pointerYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isTouchOverLeftButton = touchXPosPx >= leftButtonXPosPx && touchXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= leftButtonYPosPx && touchYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isPointerOverRightButton = pointerXPosPx >= rightButtonXPosPx && pointerXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= rightButtonYPosPx && pointerYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isTouchOverRightButton = touchXPosPx >= rightButtonXPosPx && touchXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= rightButtonYPosPx && touchYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isPointerOverUpButton = pointerXPosPx >= topButtonXPosPx && pointerXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= topButtonYPosPx && pointerYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isTouchOverUpButton = touchXPosPx >= topButtonXPosPx && touchXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= topButtonYPosPx && touchYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isPointerOverBottomButton = pointerXPosPx >= bottomButtonXPosPx && pointerXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && pointerYPosPx >= bottomButtonYPosPx && pointerYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
+            const isTouchOverBottomButton = touchXPosPx >= bottomButtonXPosPx && touchXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= bottomButtonYPosPx && touchYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-            const isPointerOverBButton = pointerXPosPx >= B_BUTTON_X_POS_PX && pointerXPosPx < B_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && pointerYPosPx >= B_BUTTON_Y_POS_PX && pointerYPosPx < B_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
+            const isTouchOverBButton = touchXPosPx >= B_BUTTON_X_POS_PX && touchXPosPx < B_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && touchYPosPx >= B_BUTTON_Y_POS_PX && touchYPosPx < B_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
 
-            const isPointerOverAButton = pointerXPosPx >= A_BUTTON_X_POS_PX && pointerXPosPx < A_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && pointerYPosPx >= A_BUTTON_Y_POS_PX && pointerYPosPx < A_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
+            const isTouchOverAButton = touchXPosPx >= A_BUTTON_X_POS_PX && touchXPosPx < A_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && touchYPosPx >= A_BUTTON_Y_POS_PX && touchYPosPx < A_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
 
-            if (isPointerOverLeftButton) {
-                activePointerId = event.pointerId;
+            if (isTouchOverLeftButton) {
+                activeTouchId = event.pointerId;
                 moveCursorLeft();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorLeft, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
-            } else if (isPointerOverRightButton) {
-                activePointerId = event.pointerId;
+            } else if (isTouchOverRightButton) {
+                activeTouchId = event.pointerId;
                 moveCursorRight();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorRight, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
-            } else if (isPointerOverUpButton) {
-                activePointerId = event.pointerId;
+            } else if (isTouchOverUpButton) {
+                activeTouchId = event.pointerId;
                 moveCursorUp();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorUp, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
-            } else if (isPointerOverBottomButton) {
-                activePointerId = event.pointerId;
+            } else if (isTouchOverBottomButton) {
+                activeTouchId = event.pointerId;
                 moveCursorDown();
                 holdDelayTimeoutId = setTimeout(() => {
                     holdRepeatIntervalId = setInterval(moveCursorDown, repeatIntervalMs);
                 }, pauseBeforeRepeatMs);
-            } else if (isPointerOverBButton) {
-                activePointerId = event.pointerId;
+            } else if (isTouchOverBButton) {
+                activeTouchId = event.pointerId;
                 pressBButton();
-            } else if (isPointerOverAButton) {
-                activePointerId = event.pointerId;
+            } else if (isTouchOverAButton) {
+                activeTouchId = event.pointerId;
                 pressAButton();
             }
         });
 
         canvasElement.addEventListener('pointerup', (ev) => {
-            if (ev.pointerId === activePointerId) {
+            if (ev.pointerId === activeTouchId) {
                 liftButton();
             }
         });
 
         canvasElement.addEventListener('pointercancel', (ev) => {
-            if (ev.pointerId === activePointerId) {
+            if (ev.pointerId === activeTouchId) {
                 liftButton();
             }
         });
 
         canvasElement.addEventListener('pointerleave', (ev) => {
-            if (ev.pointerId === activePointerId) {
+            if (ev.pointerId === activeTouchId) {
                 liftButton();
             }
         });
