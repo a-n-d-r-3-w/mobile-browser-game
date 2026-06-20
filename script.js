@@ -49,6 +49,7 @@ let cursorXPosPx = 0;
 let cursorYPosPx = 0;
 
 const DIRECTIONAL_BUTTON_SIZE_PX = 34;
+const ACTION_BUTTON_SIZE_PX = 45;
 const leftButtonXPosPx = 14;
 const leftButtonYPosPx = 352;
 const rightButtonXPosPx = 84;
@@ -57,6 +58,10 @@ const topButtonXPosPx = 49;
 const topButtonYPosPx = 316;
 const bottomButtonXPosPx = 49;
 const bottomButtonYPosPx = 388;
+const B_BUTTON_X_POS_PX = 138;
+const B_BUTTON_Y_POS_PX = 375;
+const A_BUTTON_X_POS_PX = 197;
+const A_BUTTON_Y_POS_PX = 375;
 
 const gridSizePx = 16; // Grid is 16 cells across and 15 cells down.
 const NES_WIDTH_PX = 256;
@@ -122,7 +127,9 @@ function render() {
     canvasContext.fillRect(topButtonXPosPx, topButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.fillRect(bottomButtonXPosPx, bottomButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
 
-    canvasContext.fillRect(138, 375, 45, 45);
+    canvasContext.fillRect(B_BUTTON_X_POS_PX, B_BUTTON_Y_POS_PX, ACTION_BUTTON_SIZE_PX, ACTION_BUTTON_SIZE_PX);
+    canvasContext.fillRect(A_BUTTON_X_POS_PX, A_BUTTON_Y_POS_PX, ACTION_BUTTON_SIZE_PX, ACTION_BUTTON_SIZE_PX);
+
     canvasContext.restore();
 }
 
