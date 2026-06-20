@@ -61,7 +61,7 @@ const bottomButtonYPosPx = 388;
 function renderGrid() {
     const gridSizePx = 16;
     canvasContext.save();
-    canvasContext.strokeStyle = '#554894';
+    canvasContext.strokeStyle = '#473c7e';
     canvasContext.lineWidth = 1;
 
     for (let x = gridSizePx; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += gridSizePx) {
