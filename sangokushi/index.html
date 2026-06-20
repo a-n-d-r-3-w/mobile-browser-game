@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mobile Browser Game</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- viewport: The part of the document being viewed in the browser window. -->
+  <!-- width: Controls the (minimum) pixel width of the viewport. -->
+  <!-- device-width is the physical size of the device screen in CSS pixels. -->
+  <!-- initial-scale: Defines the ratio between the device width and the viewport size. -->
+  <!-- maximum-scale: Defines the maximum amount to zoom in. -->
+  <!-- user-scalable: A boolean indicating if the user can zoom the web page. -->
+
+  <!-- Load CSS and JS with cache busting -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <script>
+    const cacheBuster = Date.now();
+    const styleLink = document.createElement('link');
+    styleLink.rel = 'stylesheet';
+    styleLink.href = `style.css?cachebust=${cacheBuster}`;
+    document.head.appendChild(styleLink);
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = `script.js?cachebust=${cacheBuster}`;
+    document.head.appendChild(script);
+  </script>
+
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+
+</body>
+
+</html>

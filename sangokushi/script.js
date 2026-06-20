@@ -37,6 +37,30 @@ if (isIosSafari) {
     alert('Safari deletes a website\'s stored data after 7 days of inactivity. To help prevent data loss, add this website to your home screen and open it from there.');
 }
 
+const Color = Object.freeze({
+    RED_BROWN: "#a16600",
+    BEIGE: "#ede791",
+    ORANGE_RED: "#c04900",
+    GREEN: "#00df00",
+    BLUE: "#5000ff",
+})
+
+const CastleFillColor = Object.freeze({
+    ORANGE: "#ff7754",
+    BLUE: "#0057fd",
+    RED: "#bf3e0b",
+    WHITE: "#fffeff",
+    BLACK: "#000000",
+});
+
+const CastleLineColor = Object.freeze({
+    WHITE: "#fffeff",
+    GRAY: "#9381a8",
+    BLUE: "#5000ff",
+})
+
+const CommandCursorColor = "#0056ff";
+
 // Draw a base background color before the images load.
 canvasContext.fillStyle = "#ffffff"; // white
 canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
