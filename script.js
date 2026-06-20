@@ -44,6 +44,7 @@ canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFF
 const backgroundImageElement = new Image();
 const controllerImageElement = new Image();
 const cursorImageElement = new Image();
+const optimusImageElement = new Image();
 
 const DIRECTIONAL_BUTTON_SIZE_PX = 34;
 const ACTION_BUTTON_SIZE_PX = 45;
@@ -60,11 +61,11 @@ const B_BUTTON_Y_POS_PX = 375;
 const A_BUTTON_X_POS_PX = 197;
 const A_BUTTON_Y_POS_PX = 375;
 
-const gridSizePx = 16; // Grid is 16 cells across and 15 cells down.
+const GRID_SIZE_PX = 16; // Grid is 16 cells across and 15 cells down.
 const NES_WIDTH_PX = 256;
 const NES_HEIGHT_PX = 240;
-const numCols = NES_WIDTH_PX / gridSizePx;
-const numRows = NES_HEIGHT_PX / gridSizePx;
+const numCols = NES_WIDTH_PX / GRID_SIZE_PX;
+const numRows = NES_HEIGHT_PX / GRID_SIZE_PX;
 const cursorPosGu = { // Gu means "grid units".
     x: 8,
     y: 8,
@@ -75,14 +76,14 @@ function renderGrid() {
     canvasContext.strokeStyle = '#473c7e';
     canvasContext.lineWidth = 1;
     canvasContext.setLineDash([1, 1]);
-    for (let x = gridSizePx; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += gridSizePx) {
+    for (let x = GRID_SIZE_PX; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += GRID_SIZE_PX) {
         canvasContext.beginPath();
         canvasContext.moveTo(x + 0.5, 0);
         canvasContext.lineTo(x + 0.5, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
         canvasContext.stroke();
     }
 
-    for (let y = gridSizePx; y < CANVAS_DRAWING_BUFFER_HEIGHT_PX; y += gridSizePx) {
+    for (let y = GRID_SIZE_PX; y < CANVAS_DRAWING_BUFFER_HEIGHT_PX; y += GRID_SIZE_PX) {
         canvasContext.beginPath();
         canvasContext.moveTo(0, y + 0.5);
         canvasContext.lineTo(CANVAS_DRAWING_BUFFER_WIDTH_PX, y + 0.5);
@@ -110,10 +111,13 @@ function render() {
     const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
     canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
+    // Draw Optimus.
+    canvasContext.drawImage(optimusImageElement, 11 * GRID_SIZE_PX, backgroundYPosPx + 12 * GRID_SIZE_PX);
+
     // Draw cursor.
     canvasContext.drawImage(cursorImageElement,
-        backgroundXPosPx + cursorPosGu.x * gridSizePx + gridSizePx / 2,
-        backgroundYPosPx + cursorPosGu.y * gridSizePx + gridSizePx / 2
+        backgroundXPosPx + cursorPosGu.x * GRID_SIZE_PX + GRID_SIZE_PX / 2,
+        backgroundYPosPx + cursorPosGu.y * GRID_SIZE_PX + GRID_SIZE_PX / 2
     );
 
     // draw semi-transparent rectangle for the clickable button areas on top
@@ -132,10 +136,10 @@ function render() {
 
 // Load images; when all required images are available, initialize cursor and handlers
 let loadedImageCount = 0;
-const cursorMoveDistancePx = gridSizePx;
+const cursorMoveDistancePx = GRID_SIZE_PX;
 function initAfterAllImagesLoaded() {
     loadedImageCount++;
-    if (loadedImageCount === 3) {
+    if (loadedImageCount === 4) {
         const backgroundXPosPx = 0;
         const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
         render();
@@ -275,4 +279,5 @@ backgroundImageElement.onload = initAfterAllImagesLoaded;
 backgroundImageElement.src = 'background.png';
 cursorImageElement.onload = initAfterAllImagesLoaded;
 cursorImageElement.src = 'triangle-cursor.png';
-
+optimusImageElement.onload = initAfterAllImagesLoaded;
+optimusImageElement.src = 'optimus-prime.png';
