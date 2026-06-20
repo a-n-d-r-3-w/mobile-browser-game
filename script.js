@@ -63,7 +63,7 @@ function renderGrid() {
     canvasContext.save();
     canvasContext.strokeStyle = '#473c7e';
     canvasContext.lineWidth = 1;
-
+    canvasContext.setLineDash([1, 1]);
     for (let x = gridSizePx; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += gridSizePx) {
         canvasContext.beginPath();
         canvasContext.moveTo(x + 0.5, 0);
