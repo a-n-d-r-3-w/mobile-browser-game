@@ -235,5 +235,5 @@ controllerImageElement.src = 'controller.png';
 backgroundImageElement.onload = initAfterAllImagesLoaded;
 backgroundImageElement.src = 'background.png';
 cursorImageElement.onload = initAfterAllImagesLoaded;
-cursorImageElement.src = 'blue-cursor.png';
+cursorImageElement.src = 'cursor.png';
 
