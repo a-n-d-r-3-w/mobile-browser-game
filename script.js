@@ -45,9 +45,6 @@ const backgroundImageElement = new Image();
 const controllerImageElement = new Image();
 const cursorImageElement = new Image();
 
-let cursorXPosPx = 0;
-let cursorYPosPx = 0;
-
 const DIRECTIONAL_BUTTON_SIZE_PX = 34;
 const ACTION_BUTTON_SIZE_PX = 45;
 const leftButtonXPosPx = 14;
@@ -69,8 +66,8 @@ const NES_HEIGHT_PX = 240;
 const numCols = NES_WIDTH_PX / gridSizePx;
 const numRows = NES_HEIGHT_PX / gridSizePx;
 const cursorPosGu = { // Gu means "grid units".
-    x: 0,
-    y: 0,
+    x: 8,
+    y: 8,
 }
 
 function renderGrid() {
