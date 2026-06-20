@@ -204,6 +204,7 @@ function initAfterAllImagesLoaded() {
 
             if (isCursorOverOptimusPrime) {
                 alert('You pressed the A button while the cursor was over Optimus Prime!');
+                // Show character stats and possible actions.
             } else {
                 alert('No op');
             }
