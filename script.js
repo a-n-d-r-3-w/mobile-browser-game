@@ -58,8 +58,9 @@ const topButtonYPosPx = 316;
 const bottomButtonXPosPx = 49;
 const bottomButtonYPosPx = 388;
 
+const gridSizePx = 16;
+
 function renderGrid() {
-    const gridSizePx = 16;
     canvasContext.save();
     canvasContext.strokeStyle = '#473c7e';
     canvasContext.lineWidth = 1;
@@ -114,15 +115,14 @@ function render() {
 
 // Load images; when all required images are available, initialize cursor and handlers
 let loadedImageCount = 0;
-const cursorMoveDistancePx = 4;
+const cursorMoveDistancePx = gridSizePx;
 function initAfterAllImagesLoaded() {
     loadedImageCount++;
     if (loadedImageCount === 3) {
-        // center cursor over background by default
         const backgroundXPosPx = 0;
         const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
-        cursorXPosPx = backgroundXPosPx + Math.floor((backgroundImageElement.width - cursorImageElement.width) / 2);
-        cursorYPosPx = backgroundYPosPx + Math.floor((backgroundImageElement.height - cursorImageElement.height) / 2);
+        cursorXPosPx = backgroundXPosPx + 8.5 * gridSizePx;
+        cursorYPosPx = backgroundYPosPx + 8.5 * gridSizePx;
         render();
 
         let holdDelayTimeoutId = null;
