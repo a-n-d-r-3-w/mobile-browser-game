@@ -121,6 +121,8 @@ function render() {
     canvasContext.fillRect(rightButtonXPosPx, rightButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.fillRect(topButtonXPosPx, topButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
     canvasContext.fillRect(bottomButtonXPosPx, bottomButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
+
+    canvasContext.fillRect(138, 375, 45, 45);
     canvasContext.restore();
 }
 
