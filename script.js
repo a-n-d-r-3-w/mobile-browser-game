@@ -197,10 +197,8 @@ function initAfterAllImagesLoaded() {
 
         const pressAButton = () => {
             const isCursorOverOptimusPrime =
-                cursorPos.col * GRID_SIZE_PX >= entities[0].position.col * GRID_SIZE_PX &&
-                cursorPos.col * GRID_SIZE_PX < entities[0].position.col * GRID_SIZE_PX + entities[0].imageElement.width &&
-                cursorPos.row * GRID_SIZE_PX >= entities[0].position.row * GRID_SIZE_PX &&
-                cursorPos.row * GRID_SIZE_PX < entities[0].position.row * GRID_SIZE_PX + entities[0].imageElement.height;
+                cursorPos.col === entities[0].position.col &&
+                cursorPos.row === entities[0].position.row;
 
             if (isCursorOverOptimusPrime) {
                 alert('You pressed the A button while the cursor was over Optimus Prime!');
