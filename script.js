@@ -58,7 +58,13 @@ const topButtonYPosPx = 316;
 const bottomButtonXPosPx = 49;
 const bottomButtonYPosPx = 388;
 
-const gridSizePx = 16;
+const gridSizePx = 16; // Grid is 16 cells across and 15 cells down.
+const numCols = CANVAS_DRAWING_BUFFER_WIDTH_PX / gridSizePx;
+const numRows = CANVAS_DRAWING_BUFFER_HEIGHT_PX / gridSizePx;
+const cursorPosGu = { // Gu means "grid units".
+    x: 0,
+    y: 0,
+}
 
 function renderGrid() {
     canvasContext.save();
@@ -101,7 +107,10 @@ function render() {
     canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
 
     // Draw cursor.
-    canvasContext.drawImage(cursorImageElement, cursorXPosPx, cursorYPosPx);
+    canvasContext.drawImage(cursorImageElement,
+        backgroundXPosPx + cursorPosGu.x * gridSizePx + gridSizePx / 2,
+        backgroundYPosPx + cursorPosGu.y * gridSizePx + gridSizePx / 2
+    );
 
     // draw semi-transparent rectangle for the clickable button areas on top
     canvasContext.save();
@@ -121,8 +130,6 @@ function initAfterAllImagesLoaded() {
     if (loadedImageCount === 3) {
         const backgroundXPosPx = 0;
         const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
-        cursorXPosPx = backgroundXPosPx + 8.5 * gridSizePx;
-        cursorYPosPx = backgroundYPosPx + 8.5 * gridSizePx;
         render();
 
         let holdDelayTimeoutId = null;
@@ -142,22 +149,22 @@ function initAfterAllImagesLoaded() {
         };
 
         const moveCursorLeft = () => {
-            cursorXPosPx = Math.max(0, cursorXPosPx - cursorMoveDistancePx);
+            cursorPosGu.x = Math.max(0, cursorPosGu.x - 1);
             render();
         };
 
         const moveCursorRight = () => {
-            cursorXPosPx = Math.min(CANVAS_DRAWING_BUFFER_WIDTH_PX - cursorImageElement.width, cursorXPosPx + cursorMoveDistancePx);
+            cursorPosGu.x = Math.min(numCols - 1, cursorPosGu.x + 1);
             render();
         };
 
         const moveCursorUp = () => {
-            cursorYPosPx = Math.max(0, cursorYPosPx - cursorMoveDistancePx);
+            cursorPosGu.y = Math.max(0, cursorPosGu.y - 1);
             render();
         };
 
         const moveCursorDown = () => {
-            cursorYPosPx = Math.min(CANVAS_DRAWING_BUFFER_HEIGHT_PX - cursorImageElement.height, cursorYPosPx + cursorMoveDistancePx);
+            cursorPosGu.y = Math.min(numRows - 1, cursorPosGu.y + 1);
             render();
         };
 
