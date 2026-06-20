@@ -59,8 +59,10 @@ const bottomButtonXPosPx = 49;
 const bottomButtonYPosPx = 388;
 
 const gridSizePx = 16; // Grid is 16 cells across and 15 cells down.
-const numCols = CANVAS_DRAWING_BUFFER_WIDTH_PX / gridSizePx;
-const numRows = CANVAS_DRAWING_BUFFER_HEIGHT_PX / gridSizePx;
+const NES_WIDTH_PX = 256;
+const NES_HEIGHT_PX = 240;
+const numCols = NES_WIDTH_PX / gridSizePx;
+const numRows = NES_HEIGHT_PX / gridSizePx;
 const cursorPosGu = { // Gu means "grid units".
     x: 0,
     y: 0,
