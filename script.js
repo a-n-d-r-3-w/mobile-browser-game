@@ -35,37 +35,9 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 //     alert('Safari deletes a website\'s stored data after 7 days of inactivity. To help prevent data loss, add this website to your home screen and open it from there.');
 // }
 
-// Draw a base background color before the images load.
-canvasContext.fillStyle = "#ffffff"; // white
+// Draw a base background color.
+canvasContext.fillStyle = "#cccccc";
 canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
-
-const backgroundImageElement = new Image();
-const controllerImageElement = new Image();
-const cursorImageElement = new Image();
-const optimusImageElement = new Image();
-
-const entities = [
-    {
-        name: 'Optimus Prime',
-        imageElement: optimusImageElement,
-        position: { col: 11, row: 12 },
-    }
-];
-
-const DIRECTIONAL_BUTTON_SIZE_PX = 34;
-const ACTION_BUTTON_SIZE_PX = 45;
-const leftButtonXPosPx = 14;
-const leftButtonYPosPx = 352;
-const rightButtonXPosPx = 84;
-const rightButtonYPosPx = 352;
-const topButtonXPosPx = 49;
-const topButtonYPosPx = 316;
-const bottomButtonXPosPx = 49;
-const bottomButtonYPosPx = 388;
-const B_BUTTON_X_POS_PX = 138;
-const B_BUTTON_Y_POS_PX = 375;
-const A_BUTTON_X_POS_PX = 197;
-const A_BUTTON_Y_POS_PX = 375;
 
 const GRID_SIZE_PX = 16; // Grid is 16 cells across and 15 cells down.
 const NES_WIDTH_PX = 256;
@@ -100,199 +72,43 @@ function renderGrid() {
 }
 
 function render() {
-    // Draw background.
-    const backgroundXPosPx = 0;
-    const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
-    canvasContext.drawImage(backgroundImageElement, backgroundXPosPx, backgroundYPosPx);
-
     renderGrid();
-
-    // Draw white area at top.
-    canvasContext.save();
-    canvasContext.fillStyle = '#ffffff';
-    canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, backgroundYPosPx);
-    canvasContext.restore();
-
-    // Draw controller.
-    const controllerYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height;
-    canvasContext.drawImage(controllerImageElement, 0, controllerYPosPx);
-
-    // Draw entities.
-    for (const entity of entities) {
-        canvasContext.drawImage(entity.imageElement, backgroundXPosPx + entity.position.col * GRID_SIZE_PX, backgroundYPosPx + entity.position.row * GRID_SIZE_PX);
-    }
-
-    // Draw cursor.
-    canvasContext.drawImage(cursorImageElement,
-        backgroundXPosPx + cursorPos.col * GRID_SIZE_PX + GRID_SIZE_PX / 2,
-        backgroundYPosPx + cursorPos.row * GRID_SIZE_PX + GRID_SIZE_PX / 2
-    );
-
-    // draw semi-transparent rectangle for the clickable button areas on top
-    canvasContext.save();
-    canvasContext.fillStyle = 'rgba(0, 255, 115, 0.25)';
-    canvasContext.fillRect(leftButtonXPosPx, leftButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
-    canvasContext.fillRect(rightButtonXPosPx, rightButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
-    canvasContext.fillRect(topButtonXPosPx, topButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
-    canvasContext.fillRect(bottomButtonXPosPx, bottomButtonYPosPx, DIRECTIONAL_BUTTON_SIZE_PX, DIRECTIONAL_BUTTON_SIZE_PX);
-
-    canvasContext.fillRect(B_BUTTON_X_POS_PX, B_BUTTON_Y_POS_PX, ACTION_BUTTON_SIZE_PX, ACTION_BUTTON_SIZE_PX);
-    canvasContext.fillRect(A_BUTTON_X_POS_PX, A_BUTTON_Y_POS_PX, ACTION_BUTTON_SIZE_PX, ACTION_BUTTON_SIZE_PX);
-
-    canvasContext.restore();
 }
 
-// Load images; when all required images are available, initialize cursor and handlers
-let loadedImageCount = 0;
 const cursorMoveDistancePx = GRID_SIZE_PX;
-function initAfterAllImagesLoaded() {
-    loadedImageCount++;
-    if (loadedImageCount === 4) {
-        const backgroundXPosPx = 0;
-        const backgroundYPosPx = CANVAS_DRAWING_BUFFER_HEIGHT_PX - controllerImageElement.height - backgroundImageElement.height;
-        render();
 
-        let holdDelayTimeoutId = null;
-        let holdRepeatIntervalId = null;
-        let activeTouchId = null;
+function init() {
+    render();
 
-        const liftButton = () => {
-            if (holdDelayTimeoutId !== null) {
-                clearTimeout(holdDelayTimeoutId);
-                holdDelayTimeoutId = null;
-            }
-            if (holdRepeatIntervalId !== null) {
-                clearInterval(holdRepeatIntervalId);
-                holdRepeatIntervalId = null;
-            }
-            activeTouchId = null;
-        };
+    let holdDelayTimeoutId = null;
+    let holdRepeatIntervalId = null;
+    let activeTouchId = null;
 
-        const moveCursorLeft = () => {
-            cursorPos.col = Math.max(0, cursorPos.col - 1);
-            render();
-        };
+    canvasElement.addEventListener('pointerdown', (event) => {
+        const canvasBoundingRect = canvasElement.getBoundingClientRect();
+        const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
+        const canvasScaleY = canvasElement.height / canvasBoundingRect.height;
 
-        const moveCursorRight = () => {
-            cursorPos.col = Math.min(numCols - 1, cursorPos.col + 1);
-            render();
-        };
+        const touchXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
+        const touchYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
 
-        const moveCursorUp = () => {
-            cursorPos.row = Math.max(0, cursorPos.row - 1);
-            render();
-        };
+        // Check if touch is over any button.
+        // const isTouchOverLeftButton = touchXPosPx >= leftButtonXPosPx && touchXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= leftButtonYPosPx && touchYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
-        const moveCursorDown = () => {
-            cursorPos.row = Math.min(numRows - 1, cursorPos.row + 1);
-            render();
-        };
+        // if (isTouchOverLeftButton) {
+        // do something
+        // } else if (isTouchOverRightButton) {
+        // }
+    });
 
-        const pressBButton = () => {
-            // For demonstration, move cursor to top-left when B button is pressed.
-            cursorPos.col = 0;
-            cursorPos.row = 0;
-            render();
-        }
+    canvasElement.addEventListener('pointerup', (ev) => {
+    });
 
-        const pressAButton = () => {
-            const isCursorOverOptimusPrime =
-                cursorPos.col === entities[0].position.col &&
-                cursorPos.row === entities[0].position.row;
+    canvasElement.addEventListener('pointercancel', (ev) => {
+    });
 
-            if (isCursorOverOptimusPrime) {
-                alert('You pressed the A button while the cursor was over Optimus Prime!');
-                // Show character stats and possible actions.
-            } else {
-                alert('No op');
-            }
-            render();
-        }
-
-        const pauseBeforeRepeatMs = 500;
-        const repeatIntervalMs = 50;
-        canvasElement.addEventListener('pointerdown', (event) => {
-            if (activeTouchId !== null) {
-                return;
-            }
-
-            const canvasBoundingRect = canvasElement.getBoundingClientRect();
-            const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
-            const canvasScaleY = canvasElement.height / canvasBoundingRect.height;
-
-            const touchXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
-            const touchYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
-
-            const isTouchOverLeftButton = touchXPosPx >= leftButtonXPosPx && touchXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= leftButtonYPosPx && touchYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
-
-            const isTouchOverRightButton = touchXPosPx >= rightButtonXPosPx && touchXPosPx < rightButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= rightButtonYPosPx && touchYPosPx < rightButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
-
-            const isTouchOverUpButton = touchXPosPx >= topButtonXPosPx && touchXPosPx < topButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= topButtonYPosPx && touchYPosPx < topButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
-
-            const isTouchOverBottomButton = touchXPosPx >= bottomButtonXPosPx && touchXPosPx < bottomButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= bottomButtonYPosPx && touchYPosPx < bottomButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
-
-            const isTouchOverBButton = touchXPosPx >= B_BUTTON_X_POS_PX && touchXPosPx < B_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && touchYPosPx >= B_BUTTON_Y_POS_PX && touchYPosPx < B_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
-
-            const isTouchOverAButton = touchXPosPx >= A_BUTTON_X_POS_PX && touchXPosPx < A_BUTTON_X_POS_PX + ACTION_BUTTON_SIZE_PX && touchYPosPx >= A_BUTTON_Y_POS_PX && touchYPosPx < A_BUTTON_Y_POS_PX + ACTION_BUTTON_SIZE_PX;
-
-            if (isTouchOverLeftButton) {
-                activeTouchId = event.pointerId;
-                moveCursorLeft();
-                holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorLeft, repeatIntervalMs);
-                }, pauseBeforeRepeatMs);
-            } else if (isTouchOverRightButton) {
-                activeTouchId = event.pointerId;
-                moveCursorRight();
-                holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorRight, repeatIntervalMs);
-                }, pauseBeforeRepeatMs);
-            } else if (isTouchOverUpButton) {
-                activeTouchId = event.pointerId;
-                moveCursorUp();
-                holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorUp, repeatIntervalMs);
-                }, pauseBeforeRepeatMs);
-            } else if (isTouchOverBottomButton) {
-                activeTouchId = event.pointerId;
-                moveCursorDown();
-                holdDelayTimeoutId = setTimeout(() => {
-                    holdRepeatIntervalId = setInterval(moveCursorDown, repeatIntervalMs);
-                }, pauseBeforeRepeatMs);
-            } else if (isTouchOverBButton) {
-                activeTouchId = event.pointerId;
-                pressBButton();
-            } else if (isTouchOverAButton) {
-                activeTouchId = event.pointerId;
-                pressAButton();
-            }
-        });
-
-        canvasElement.addEventListener('pointerup', (ev) => {
-            if (ev.pointerId === activeTouchId) {
-                liftButton();
-            }
-        });
-
-        canvasElement.addEventListener('pointercancel', (ev) => {
-            if (ev.pointerId === activeTouchId) {
-                liftButton();
-            }
-        });
-
-        canvasElement.addEventListener('pointerleave', (ev) => {
-            if (ev.pointerId === activeTouchId) {
-                liftButton();
-            }
-        });
-    }
+    canvasElement.addEventListener('pointerleave', (ev) => {
+    });
 }
 
-controllerImageElement.onload = initAfterAllImagesLoaded;
-controllerImageElement.src = 'controller.png';
-backgroundImageElement.onload = initAfterAllImagesLoaded;
-backgroundImageElement.src = 'background.png';
-cursorImageElement.onload = initAfterAllImagesLoaded;
-cursorImageElement.src = 'triangle-cursor.png';
-optimusImageElement.onload = initAfterAllImagesLoaded;
-optimusImageElement.src = 'optimus-prime.png';
+init();

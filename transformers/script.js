@@ -145,7 +145,7 @@ function render() {
 // Load images; when all required images are available, initialize cursor and handlers
 let loadedImageCount = 0;
 const cursorMoveDistancePx = GRID_SIZE_PX;
-function initAfterAllImagesLoaded() {
+function init() {
     loadedImageCount++;
     if (loadedImageCount === 4) {
         const backgroundXPosPx = 0;
@@ -288,11 +288,11 @@ function initAfterAllImagesLoaded() {
     }
 }
 
-controllerImageElement.onload = initAfterAllImagesLoaded;
+controllerImageElement.onload = init;
 controllerImageElement.src = 'controller.png';
-backgroundImageElement.onload = initAfterAllImagesLoaded;
+backgroundImageElement.onload = init;
 backgroundImageElement.src = 'background.png';
-cursorImageElement.onload = initAfterAllImagesLoaded;
+cursorImageElement.onload = init;
 cursorImageElement.src = 'triangle-cursor.png';
-optimusImageElement.onload = initAfterAllImagesLoaded;
+optimusImageElement.onload = init;
 optimusImageElement.src = 'optimus-prime.png';
