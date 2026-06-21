@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  /* Prevent scrolling. */
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Display size: scale the internal 256px canvas up to 375px */
+/* Canvas dimensions are hard-coded to fit on the following mobile browsers. */
+/* Apple iPhone 15 Safari (393px x 695px viewport) */
+/* DuckDuckGo browser (393px x 650px viewport) */
+/* iPhone Xs Safari (375px x 634px viewport) */
+#canvas {
+  /* CSS display width */
+  width: var(--canvas-width);
+  /* CSS display height */
+  height: var(--canvas-height);
+  /* keep scaled pixels crisp for low-res art */
+  image-rendering: pixelated;
+}
