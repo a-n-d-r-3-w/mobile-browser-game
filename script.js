@@ -127,6 +127,24 @@ function renderTeamMembers() {
 function render() {
     renderGrid();
     renderTeamMembers();
+
+    // Load optimus-prime-32.png and render at a random location.
+    const optimusPrimeImage = new Image();
+    optimusPrimeImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(optimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    optimusPrimeImage.src = 'optimus-prime-32.png';
+
+    // Load megatron-32.png and render at a random location.
+    const megatronImage = new Image();
+    megatronImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(megatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    megatronImage.src = 'megatron-32.png';
 }
 
 const cursorMoveDistancePx = GRID_SIZE_PX;
