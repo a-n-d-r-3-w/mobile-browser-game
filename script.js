@@ -51,9 +51,11 @@ const cursorPos = {
 
 function renderGrid() {
     canvasContext.save();
-    canvasContext.strokeStyle = '#473c7e';
+
+    canvasContext.strokeStyle = '#000000';
     canvasContext.lineWidth = 1;
     canvasContext.setLineDash([1, 1]);
+
     for (let x = GRID_SIZE_PX; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += GRID_SIZE_PX) {
         canvasContext.beginPath();
         canvasContext.moveTo(x + 0.5, 0);
