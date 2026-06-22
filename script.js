@@ -39,7 +39,7 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 canvasContext.fillStyle = "#cccccc";
 canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
-const GRID_SIZE_PX = 64;
+const GRID_SIZE_PX = 32;
 const NES_WIDTH_PX = 256;
 const NES_HEIGHT_PX = 240;
 const numCols = NES_WIDTH_PX / GRID_SIZE_PX;
