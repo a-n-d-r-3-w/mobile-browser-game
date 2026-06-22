@@ -1,20 +1,4 @@
-// Teams
-const TEAM_RED = [
-    { name: 'Maroon', color: '#800000' },
-    { name: 'Ruby', color: '#e0115f' },
-    { name: 'Burgundy', color: '#900020' },
-    { name: 'Cardinal', color: '#c41e3a' },
-    { name: 'Scarlet', color: '#ff2400' },
-];
-
-const TEAM_PURPLE = [
-    { name: 'Fuchsia', color: '#ff00ff' },
-    { name: 'Orchid', color: '#da70d6' },
-    { name: 'Magenta', color: '#ff00ff' },
-    { name: 'Amethyst', color: '#9966cc' },
-    { name: 'Mauve', color: '#e0b0ff' },
-];
-
+// Initialize canvas.
 const rootElement = document.documentElement;
 const canvasElement = document.getElementById("canvas");
 
@@ -32,6 +16,35 @@ canvasElement.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
 
 const canvasContext = canvasElement.getContext("2d");
 canvasContext.imageSmoothingEnabled = false;
+
+// Grid
+const grid = [
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+    [{}, {}, {}, {}, {}, {}, {}, {}],
+]
+
+// Teams
+const TEAM_RED = [
+    { name: 'Maroon', color: '#800000' },
+    { name: 'Ruby', color: '#e0115f' },
+    { name: 'Burgundy', color: '#900020' },
+    { name: 'Cardinal', color: '#c41e3a' },
+    { name: 'Scarlet', color: '#ff2400' },
+];
+
+const TEAM_PURPLE = [
+    { name: 'Fuchsia', color: '#ff00ff' },
+    { name: 'Orchid', color: '#da70d6' },
+    { name: 'Magenta', color: '#ff00ff' },
+    { name: 'Amethyst', color: '#9966cc' },
+    { name: 'Mauve', color: '#e0b0ff' },
+];
 
 // Prevent pinch-to-zoom and multi-touch browser gestures.
 window.addEventListener('touchmove', event => {
@@ -57,20 +70,18 @@ canvasContext.fillStyle = "#cccccc";
 canvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
 const GRID_SIZE_PX = 32;
-const NES_WIDTH_PX = 256;
-const NES_HEIGHT_PX = 240;
-const numCols = NES_WIDTH_PX / GRID_SIZE_PX;
-const numRows = NES_HEIGHT_PX / GRID_SIZE_PX;
+const numCols = CANVAS_DRAWING_BUFFER_WIDTH_PX / GRID_SIZE_PX;
+const numRows = Math.floor(CANVAS_DRAWING_BUFFER_HEIGHT_PX / GRID_SIZE_PX);
 
 // Set initial position of team members.
 for (teamMember of TEAM_RED) {
-    teamMember.row = Math.floor(Math.random() * numCols);
-    teamMember.col = Math.floor(Math.random() * numRows);
+    teamMember.row = Math.floor(Math.random() * numRows);
+    teamMember.col = Math.floor(Math.random() * numCols);
 }
 
 for (teamMember of TEAM_PURPLE) {
-    teamMember.row = Math.floor(Math.random() * numCols);
-    teamMember.col = Math.floor(Math.random() * numRows);
+    teamMember.row = Math.floor(Math.random() * numRows);
+    teamMember.col = Math.floor(Math.random() * numCols);
 }
 
 console.log('TEAM_RED:', TEAM_RED);
