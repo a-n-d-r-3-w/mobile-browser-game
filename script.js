@@ -145,6 +145,24 @@ function render() {
         canvasContext.drawImage(megatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     megatronImage.src = 'megatron-32.png';
+
+    // Load rodimus-prime-32.png and render at a random location.
+    const rodimusPrimeImage = new Image();
+    rodimusPrimeImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(rodimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    rodimusPrimeImage.src = 'rodimus-prime-32.png';
+
+    // Load galvatron-32.png and render at a random location.
+    const galvatronImage = new Image();
+    galvatronImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(galvatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    galvatronImage.src = 'galvatron-32.png';
 }
 
 const cursorMoveDistancePx = GRID_SIZE_PX;
