@@ -131,6 +131,11 @@ function init() {
         const touchXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
         const touchYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
 
+        const touchRow = Math.floor(touchYPosPx / GRID_SIZE_PX);
+        const touchCol = Math.floor(touchXPosPx / GRID_SIZE_PX);
+
+        alert(`Touched row ${touchRow}, col ${touchCol}`);
+
         // Check if touch is over any button.
         // const isTouchOverLeftButton = touchXPosPx >= leftButtonXPosPx && touchXPosPx < leftButtonXPosPx + DIRECTIONAL_BUTTON_SIZE_PX && touchYPosPx >= leftButtonYPosPx && touchYPosPx < leftButtonYPosPx + DIRECTIONAL_BUTTON_SIZE_PX;
 
