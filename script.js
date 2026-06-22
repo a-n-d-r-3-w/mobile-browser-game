@@ -1,3 +1,20 @@
+// Teams
+const TEAM_RED = [
+    { name: 'Maroon', color: '#800000' },
+    { name: 'Ruby', color: '#e0115f' },
+    { name: 'Burgundy', color: '#900020' },
+    { name: 'Cardinal', color: '#c41e3a' },
+    { name: 'Scarlet', color: '#ff2400' },
+];
+
+const TEAM_PURPLE = [
+    { name: 'Fuchsia', color: '#ff00ff' },
+    { name: 'Orchid', color: '#da70d6' },
+    { name: 'Magenta', color: '#ff00ff' },
+    { name: 'Amethyst', color: '#9966cc' },
+    { name: 'Mauve', color: '#e0b0ff' },
+];
+
 const rootElement = document.documentElement;
 const canvasElement = document.getElementById("canvas");
 
@@ -44,6 +61,20 @@ const NES_WIDTH_PX = 256;
 const NES_HEIGHT_PX = 240;
 const numCols = NES_WIDTH_PX / GRID_SIZE_PX;
 const numRows = NES_HEIGHT_PX / GRID_SIZE_PX;
+
+// Set initial position of team members.
+for (teamMember of TEAM_RED) {
+    teamMember.row = Math.floor(Math.random() * numCols);
+    teamMember.col = Math.floor(Math.random() * numRows);
+}
+
+for (teamMember of TEAM_PURPLE) {
+    teamMember.row = Math.floor(Math.random() * numCols);
+    teamMember.col = Math.floor(Math.random() * numRows);
+}
+
+console.log('TEAM_RED:', TEAM_RED);
+console.log('TEAM_PURPLE:', TEAM_PURPLE);
 
 function renderGrid() {
     canvasContext.save();
