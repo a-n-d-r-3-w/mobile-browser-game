@@ -102,8 +102,20 @@ function renderGrid() {
     canvasContext.restore();
 }
 
+function renderTeamMembers() {
+    for (teamMember of TEAM_RED) {
+        canvasContext.fillStyle = teamMember.color;
+        canvasContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    }
+    for (teamMember of TEAM_PURPLE) {
+        canvasContext.fillStyle = teamMember.color;
+        canvasContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    }
+}
+
 function render() {
     renderGrid();
+    renderTeamMembers();
 }
 
 const cursorMoveDistancePx = GRID_SIZE_PX;
