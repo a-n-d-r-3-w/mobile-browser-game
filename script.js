@@ -52,6 +52,7 @@ function renderGrid() {
     canvasContext.lineWidth = 1;
     canvasContext.setLineDash([1, 1]);
 
+    // Draw vertical grid lines.
     for (let x = GRID_SIZE_PX; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += GRID_SIZE_PX) {
         canvasContext.beginPath();
         canvasContext.moveTo(x + 0.5, 0);
@@ -59,6 +60,7 @@ function renderGrid() {
         canvasContext.stroke();
     }
 
+    // Draw horizontal grid lines.
     for (let y = GRID_SIZE_PX; y < CANVAS_DRAWING_BUFFER_HEIGHT_PX; y += GRID_SIZE_PX) {
         canvasContext.beginPath();
         canvasContext.moveTo(0, y + 0.5);
