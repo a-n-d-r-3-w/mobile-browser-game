@@ -82,10 +82,6 @@ const cursorMoveDistancePx = GRID_SIZE_PX;
 function init() {
     render();
 
-    let holdDelayTimeoutId = null;
-    let holdRepeatIntervalId = null;
-    let activeTouchId = null;
-
     canvasElement.addEventListener('pointerdown', (event) => {
         const canvasBoundingRect = canvasElement.getBoundingClientRect();
         const canvasScaleX = canvasElement.width / canvasBoundingRect.width;
