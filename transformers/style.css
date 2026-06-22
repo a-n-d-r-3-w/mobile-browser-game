@@ -8,6 +8,8 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  /* Prevent magnifying glass on long press in Safari. */
+  -webkit-user-callout: none;
 }
 
 canvas {
