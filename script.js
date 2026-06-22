@@ -163,6 +163,24 @@ function render() {
         canvasContext.drawImage(galvatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     galvatronImage.src = 'galvatron-32.png';
+
+    // Load brainstorm-32.png and render at a random location.
+    const brainstormImage = new Image();
+    brainstormImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(brainstormImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    brainstormImage.src = 'brainstorm-32.png';
+
+    // Load apeface-32.png and render at a random location.
+    const apefaceImage = new Image();
+    apefaceImage.onload = () => {
+        const randomRow = Math.floor(Math.random() * numRows);
+        const randomCol = Math.floor(Math.random() * numCols);
+        canvasContext.drawImage(apefaceImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+    };
+    apefaceImage.src = 'apeface-32.png';
 }
 
 const cursorMoveDistancePx = GRID_SIZE_PX;
