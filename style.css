@@ -11,12 +11,12 @@ body {
 }
 
 #canvases-centerer {
-  /* Center the canvases in the viewport. */
+  /* Horizontally center the canvases in the viewport. */
   display: flex;
   justify-content: center;
-  /* align-items: center;
-  width: 100vw;
-  height: 100vh; */
+  /* Vertically center the canvases in the viewport. */
+  align-items: center;
+  height: 100vh;
 }
 
 #canvases {
