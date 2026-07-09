@@ -1,7 +1,7 @@
 // Initialize canvas.
 const rootElement = document.documentElement;
-const mapCanvasElement = document.getElementById("map-canvas");
-const uiCanvasElement = document.getElementById("ui-canvas");
+const mapLayer = document.getElementById("map-layer");
+const uiLayer = document.getElementById("ui-layer");
 
 // Set canvas rendered size.
 const CANVAS_RENDERED_WIDTH_PX = 375;
@@ -12,15 +12,15 @@ rootElement.style.setProperty('--canvas-height', `${CANVAS_RENDERED_HEIGHT_PX}px
 // Set canvas drawing buffer size.
 const CANVAS_DRAWING_BUFFER_WIDTH_PX = 256;
 const CANVAS_DRAWING_BUFFER_HEIGHT_PX = CANVAS_RENDERED_HEIGHT_PX * (CANVAS_DRAWING_BUFFER_WIDTH_PX / CANVAS_RENDERED_WIDTH_PX); // Match aspect ratio of rendered size.
-mapCanvasElement.width = CANVAS_DRAWING_BUFFER_WIDTH_PX;
-mapCanvasElement.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
-uiCanvasElement.width = CANVAS_DRAWING_BUFFER_WIDTH_PX;
-uiCanvasElement.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
+mapLayer.width = CANVAS_DRAWING_BUFFER_WIDTH_PX;
+mapLayer.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
+uiLayer.width = CANVAS_DRAWING_BUFFER_WIDTH_PX;
+uiLayer.height = CANVAS_DRAWING_BUFFER_HEIGHT_PX;
 
-const mapCanvasContext = mapCanvasElement.getContext("2d");
-mapCanvasContext.imageSmoothingEnabled = false;
-const uiCanvasContext = uiCanvasElement.getContext("2d");
-uiCanvasContext.imageSmoothingEnabled = false;
+const mapContext = mapLayer.getContext("2d");
+mapContext.imageSmoothingEnabled = false;
+const uiContext = uiLayer.getContext("2d");
+uiContext.imageSmoothingEnabled = false;
 
 // Grid
 const grid = [
@@ -71,8 +71,8 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 // }
 
 // Draw a base background color.
-mapCanvasContext.fillStyle = "#cccccc";
-mapCanvasContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
+mapContext.fillStyle = "#cccccc";
+mapContext.fillRect(0, 0, CANVAS_DRAWING_BUFFER_WIDTH_PX, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
 
 const GRID_SIZE_PX = 32;
 const numCols = CANVAS_DRAWING_BUFFER_WIDTH_PX / GRID_SIZE_PX;
@@ -93,39 +93,39 @@ console.log('TEAM_RED:', TEAM_RED);
 console.log('TEAM_PURPLE:', TEAM_PURPLE);
 
 function renderGrid() {
-    mapCanvasContext.save();
+    mapContext.save();
 
-    mapCanvasContext.strokeStyle = '#000000';
-    mapCanvasContext.lineWidth = 1;
-    mapCanvasContext.setLineDash([1, 1]);
+    mapContext.strokeStyle = '#000000';
+    mapContext.lineWidth = 1;
+    mapContext.setLineDash([1, 1]);
 
     // Draw vertical grid lines.
     for (let x = GRID_SIZE_PX; x < CANVAS_DRAWING_BUFFER_WIDTH_PX; x += GRID_SIZE_PX) {
-        mapCanvasContext.beginPath();
-        mapCanvasContext.moveTo(x + 0.5, 0);
-        mapCanvasContext.lineTo(x + 0.5, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
-        mapCanvasContext.stroke();
+        mapContext.beginPath();
+        mapContext.moveTo(x + 0.5, 0);
+        mapContext.lineTo(x + 0.5, CANVAS_DRAWING_BUFFER_HEIGHT_PX);
+        mapContext.stroke();
     }
 
     // Draw horizontal grid lines.
     for (let y = GRID_SIZE_PX; y < CANVAS_DRAWING_BUFFER_HEIGHT_PX; y += GRID_SIZE_PX) {
-        mapCanvasContext.beginPath();
-        mapCanvasContext.moveTo(0, y + 0.5);
-        mapCanvasContext.lineTo(CANVAS_DRAWING_BUFFER_WIDTH_PX, y + 0.5);
-        mapCanvasContext.stroke();
+        mapContext.beginPath();
+        mapContext.moveTo(0, y + 0.5);
+        mapContext.lineTo(CANVAS_DRAWING_BUFFER_WIDTH_PX, y + 0.5);
+        mapContext.stroke();
     }
 
-    mapCanvasContext.restore();
+    mapContext.restore();
 }
 
 function renderTeamMembers() {
     for (teamMember of TEAM_RED) {
-        mapCanvasContext.fillStyle = teamMember.color;
-        mapCanvasContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.fillStyle = teamMember.color;
+        mapContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     }
     for (teamMember of TEAM_PURPLE) {
-        mapCanvasContext.fillStyle = teamMember.color;
-        mapCanvasContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.fillStyle = teamMember.color;
+        mapContext.fillRect(teamMember.col * GRID_SIZE_PX, teamMember.row * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     }
 }
 
@@ -138,7 +138,7 @@ function render() {
     optimusPrimeImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(optimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(optimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     optimusPrimeImage.src = 'optimus-prime-32.png';
 
@@ -147,7 +147,7 @@ function render() {
     megatronImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(megatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(megatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     megatronImage.src = 'megatron-32.png';
 
@@ -156,7 +156,7 @@ function render() {
     rodimusPrimeImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(rodimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(rodimusPrimeImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     rodimusPrimeImage.src = 'rodimus-prime-32.png';
 
@@ -165,7 +165,7 @@ function render() {
     galvatronImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(galvatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(galvatronImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     galvatronImage.src = 'galvatron-32.png';
 
@@ -174,7 +174,7 @@ function render() {
     brainstormImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(brainstormImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(brainstormImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     brainstormImage.src = 'brainstorm-32.png';
 
@@ -183,7 +183,7 @@ function render() {
     apefaceImage.onload = () => {
         const randomRow = Math.floor(Math.random() * numRows);
         const randomCol = Math.floor(Math.random() * numCols);
-        mapCanvasContext.drawImage(apefaceImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
+        mapContext.drawImage(apefaceImage, randomCol * GRID_SIZE_PX, randomRow * GRID_SIZE_PX, GRID_SIZE_PX, GRID_SIZE_PX);
     };
     apefaceImage.src = 'apeface-32.png';
 }
@@ -193,10 +193,10 @@ const cursorMoveDistancePx = GRID_SIZE_PX;
 function init() {
     render();
 
-    mapCanvasElement.addEventListener('pointerdown', (event) => {
-        const canvasBoundingRect = mapCanvasElement.getBoundingClientRect();
-        const canvasScaleX = mapCanvasElement.width / canvasBoundingRect.width;
-        const canvasScaleY = mapCanvasElement.height / canvasBoundingRect.height;
+    mapLayer.addEventListener('pointerdown', (event) => {
+        const canvasBoundingRect = mapLayer.getBoundingClientRect();
+        const canvasScaleX = mapLayer.width / canvasBoundingRect.width;
+        const canvasScaleY = mapLayer.height / canvasBoundingRect.height;
 
         const touchXPosPx = (event.clientX - canvasBoundingRect.left) * canvasScaleX;
         const touchYPosPx = (event.clientY - canvasBoundingRect.top) * canvasScaleY;
@@ -215,13 +215,13 @@ function init() {
         // }
     });
 
-    mapCanvasElement.addEventListener('pointerup', (ev) => {
+    mapLayer.addEventListener('pointerup', (ev) => {
     });
 
-    mapCanvasElement.addEventListener('pointercancel', (ev) => {
+    mapLayer.addEventListener('pointercancel', (ev) => {
     });
 
-    mapCanvasElement.addEventListener('pointerleave', (ev) => {
+    mapLayer.addEventListener('pointerleave', (ev) => {
     });
 }
 
